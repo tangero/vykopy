@@ -85,7 +85,7 @@
   - Queue systém pro asynchronní odesílání emailů
   - _Požadavky: 5.1, 5.2, 5.4_
 
-- [-] 5.2 Implementace notifikačních triggerů
+- [x] 5.2 Implementace notifikačních triggerů
   - Automatické odesílání při změnách stavu projektů
   - Notifikace při detekci konfliktů
   - Upozornění na blížící se termíny
@@ -96,7 +96,7 @@
   - Testy správného načasování notifikací
   - _Požadavky: 5.1, 5.2_
 
-- [ ] 6. Vytvoření REST API pro projekty
+- [x] 6. Vytvoření REST API pro projekty
 - [x] 6.1 Implementace CRUD operací pro projekty
   - GET /api/projects s filtrováním a stránkováním
   - POST /api/projects pro vytvoření nového projektu
@@ -116,19 +116,19 @@
   - Validace délky komentářů (max 1000 znaků)
   - _Požadavky: 8.1, 8.2, 8.4_
 
-- [ ] 6.4 Napsání integration testů pro API
+- [x] 6.4 Napsání integration testů pro API
   - E2E testy pro kompletní workflow projektů
   - Testy autorizace a územních omezení
   - _Požadavky: 3.1, 3.4, 2.2_
 
-- [ ] 7. Implementace prostorových API
-- [ ] 7.1 Vytvoření spatial operations API
+- [x] 7. Implementace prostorových API
+- [x] 7.1 Vytvoření spatial operations API
   - POST /api/spatial/conflicts pro detekci konfliktů
   - GET /api/spatial/municipalities pro detekci dotčených obcí
   - Optimalizace PostGIS dotazů pro rychlé odpovědi
   - _Požadavky: 3.2, 7.1, 7.5_
 
-- [ ] 7.2 Implementace moratorium API
+- [x] 7.2 Implementace moratorium API
   - CRUD operace pro správu moratorií
   - Prostorové dotazy pro aktivní moratoria
   - Validace překryvů s existujícími omezeními
@@ -140,21 +140,21 @@
   - _Požadavky: 7.1, 4.1_
 
 - [ ] 8. Vytvoření React frontend aplikace
-- [ ] 8.1 Nastavení React projektu s TypeScript
+- [x] 8.1 Nastavení React projektu s TypeScript
   - Vytvoření React aplikace s Vite build toolem
   - Konfigurace TypeScript, ESLint a Prettier
   - Nastavení Redux Toolkit pro state management
   - Konfigurace React Router pro navigaci
   - _Požadavky: 6.1, 6.2_
 
-- [ ] 8.2 Implementace autentizačních komponent
+- [x] 8.2 Implementace autentizačních komponent
   - Přihlašovací formulář s validací
   - Registrační formulář pro nové uživatele
   - JWT token management a automatické obnovování
   - Protected routes s role-based přístupem
   - _Požadavky: 1.1, 1.4, 2.2_
 
-- [ ] 8.3 Vytvoření základního layoutu aplikace
+- [x] 8.3 Vytvoření základního layoutu aplikace
   - Hlavní navigační komponenta s user menu
   - Responzivní layout pro desktop a mobile
   - Sidebar komponenta pro detaily projektů
@@ -165,26 +165,26 @@
   - Testy pro formuláře a validace
   - _Požadavky: 8.1, 8.2_
 
-- [ ] 9. Implementace mapového rozhraní
-- [ ] 9.1 Integrace Mapbox GL JS
+- [-] 9. Implementace mapového rozhraní
+- [x] 9.1 Integrace Mapbox GL JS
   - Nastavení Mapbox účtu a API klíčů
   - Základní mapová komponenta s ovládacími prvky
   - Konfigurace mapových vrstev (OSM, ortofoto, katastr)
   - _Požadavky: 6.1, 6.3, 6.4_
 
-- [ ] 9.2 Implementace vizualizace projektů na mapě
+- [x] 9.2 Implementace vizualizace projektů na mapě
   - Renderování projektů jako geometrických objektů
   - Barevné kódování podle stavů projektů
   - Interaktivní tooltips a click handlery
   - _Požadavky: 6.1, 6.2, 6.5_
 
-- [ ] 9.3 Vytvoření kreslicích nástrojů
+- [x] 9.3 Vytvoření kreslicích nástrojů
   - Nástroje pro kreslení bodů, linií a polygonů
   - Editace existujících geometrií
   - Validace a simplifikace nakreslených tvarů
   - _Požadavky: 3.1, 3.2_
 
-- [ ] 9.4 Implementace filtrování a vyhledávání na mapě
+- [x] 9.4 Implementace filtrování a vyhledávání na mapě
   - Filtry podle stavu, data a kategorie projektů
   - Vyhledávání podle adresy s geocoding API
   - Toggle pro zapínání/vypínání mapových vrstev

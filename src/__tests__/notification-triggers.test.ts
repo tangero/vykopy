@@ -70,7 +70,7 @@ describe('NotificationTriggers', () => {
     reasonDetail: 'Test moratorium for road reconstruction',
     validFrom: new Date('2024-01-01'),
     validTo: new Date('2024-12-31'),
-    exceptions: null,
+    exceptions: undefined,
     createdBy: 'test-user-id',
     municipalityCode: 'Praha',
     createdAt: new Date()
@@ -131,7 +131,7 @@ describe('NotificationTriggers', () => {
 
     it('should trigger project started notification when moving to in_progress', async () => {
       const mockNotifyStateChanged = jest.spyOn(NotificationService, 'notifyProjectStateChanged').mockResolvedValue();
-      const mockNotifyProjectStarted = jest.spyOn(NotificationService, 'notifyProjectStarted' as any).mockResolvedValue();
+      const mockNotifyProjectStarted = jest.spyOn(NotificationService, 'notifyProjectStarted' as any).mockResolvedValue(undefined);
       const inProgressProject = { ...mockProject, state: 'in_progress' as ProjectState };
 
       await NotificationTriggers.onProjectStateChanged(inProgressProject, 'approved', 'test-user-id');
@@ -142,7 +142,7 @@ describe('NotificationTriggers', () => {
 
     it('should trigger project completed notification when moving to completed', async () => {
       const mockNotifyStateChanged = jest.spyOn(NotificationService, 'notifyProjectStateChanged').mockResolvedValue();
-      const mockNotifyProjectCompleted = jest.spyOn(NotificationService, 'notifyProjectCompleted' as any).mockResolvedValue();
+      const mockNotifyProjectCompleted = jest.spyOn(NotificationService, 'notifyProjectCompleted' as any).mockResolvedValue(undefined);
       const completedProject = { ...mockProject, state: 'completed' as ProjectState };
 
       await NotificationTriggers.onProjectStateChanged(completedProject, 'in_progress', 'test-user-id');
