@@ -171,6 +171,27 @@ export interface JwtPayload {
   exp: number;
 }
 
+// Notification types
+export interface NotificationPreferences {
+  emailEnabled: boolean;
+  projectUpdates: boolean;
+  conflictAlerts: boolean;
+  deadlineReminders: boolean;
+  commentNotifications: boolean;
+}
+
+export interface NotificationLog {
+  id: string;
+  userId: string;
+  type: string;
+  entityType: string;
+  entityId: string;
+  sent: boolean;
+  sentAt?: Date;
+  error?: string;
+  createdAt: Date;
+}
+
 // Express request extensions
 declare global {
   namespace Express {

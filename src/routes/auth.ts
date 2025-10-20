@@ -3,6 +3,7 @@ import { AuthService } from '../services/AuthService';
 import { UserModel } from '../models/User';
 import { loginSchema, registerSchema } from '../validation/schemas';
 import { authenticateToken } from '../middleware/auth';
+import { notificationTriggers } from '../services/NotificationTriggers';
 
 const router = Router();
 
@@ -41,6 +42,15 @@ router.post('/register', async (req: Request, res: Response): Promise<void> => {
     
     // Register new user
     const newUser = await AuthService.register(validatedData);
+    
+    // Trigger notifications for user registration
+    setTimeout(async () => {
+      try {
+        await notificationTriggers.onUserRegistered(newUser);
+      } catch (error) {
+        console.error('Async user registration notification failed:', error);
+      }
+    }, 0);
     
     res.status(201).json({
       success: true,

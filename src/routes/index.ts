@@ -1,10 +1,21 @@
 import { Router } from 'express';
 import { Request, Response } from 'express';
+import { Pool } from 'pg';
 import authRoutes from './auth';
 import userRoutes from './users';
 import territoryRoutes from './territories';
+import projectRoutes, { initializeProjectRoutes } from './projects';
+import moratoriumRoutes, { initializeMoratoriumRoutes } from './moratoriums';
+import spatialRoutes, { initializeSpatialRoutes } from './spatial';
 
 const router = Router();
+
+// Initialize routes with database connection
+export const initializeRoutes = (db: Pool): void => {
+  initializeProjectRoutes(db);
+  initializeMoratoriumRoutes(db);
+  initializeSpatialRoutes(db);
+};
 
 // Health check endpoint
 router.get('/health', (req: Request, res: Response) => {
@@ -39,5 +50,8 @@ router.get('/info', (req: Request, res: Response) => {
 router.use('/auth', authRoutes);
 router.use('/users', userRoutes);
 router.use('/territories', territoryRoutes);
+router.use('/projects', projectRoutes);
+router.use('/moratoriums', moratoriumRoutes);
+router.use('/spatial', spatialRoutes);
 
 export default router;

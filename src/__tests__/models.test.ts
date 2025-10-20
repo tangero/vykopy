@@ -327,7 +327,7 @@ describe('ProjectModel', () => {
       const result = await projectModel.findSpatiallyIntersecting(testGeometry, 20);
 
       expect(result).toHaveLength(1);
-      expect(result[0].name).toBe('Intersecting Project');
+      expect(result[0]?.name).toBe('Intersecting Project');
       expect(mockDb.query).toHaveBeenCalledWith(
         expect.stringContaining('ST_DWithin'),
         [JSON.stringify(testGeometry), 20]
@@ -359,7 +359,7 @@ describe('ProjectModel', () => {
       const result = await projectModel.findTemporallyOverlapping('2024-01-15', '2024-01-25');
 
       expect(result).toHaveLength(1);
-      expect(result[0].name).toBe('Overlapping Project');
+      expect(result[0]?.name).toBe('Overlapping Project');
       expect(mockDb.query).toHaveBeenCalledWith(
         expect.stringContaining('start_date <= $1 AND end_date >= $1'),
         ['2024-01-15', '2024-01-25']
@@ -495,7 +495,7 @@ describe('MoratoriumModel', () => {
       const result = await moratoriumModel.findActiveIntersecting(testGeometry, '2024-06-15');
 
       expect(result).toHaveLength(1);
-      expect(result[0].name).toBe('Active Moratorium');
+      expect(result[0]?.name).toBe('Active Moratorium');
       expect(mockDb.query).toHaveBeenCalledWith(
         expect.stringContaining('ST_Intersects'),
         ['2024-06-15', JSON.stringify(testGeometry)]
@@ -529,7 +529,7 @@ describe('MoratoriumModel', () => {
       const result = await moratoriumModel.checkViolations(testGeometry, '2024-06-01', '2024-06-30');
 
       expect(result).toHaveLength(1);
-      expect(result[0].name).toBe('Violating Moratorium');
+      expect(result[0]?.name).toBe('Violating Moratorium');
       expect(mockDb.query).toHaveBeenCalledWith(
         expect.stringContaining('valid_from <= $1 AND valid_to >= $1'),
         ['2024-06-01', '2024-06-30', JSON.stringify(testGeometry)]
@@ -558,7 +558,7 @@ describe('MoratoriumModel', () => {
       const result = await moratoriumModel.findExpiringSoon(30, ['CZ0201']);
 
       expect(result).toHaveLength(1);
-      expect(result[0].name).toBe('Expiring Moratorium');
+      expect(result[0]?.name).toBe('Expiring Moratorium');
       expect(mockDb.query).toHaveBeenCalledWith(
         expect.stringContaining('valid_to BETWEEN'),
         expect.arrayContaining([expect.any(String), expect.any(String), ['CZ0201']])

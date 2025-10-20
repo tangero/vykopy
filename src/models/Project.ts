@@ -373,6 +373,52 @@ export class ProjectModel {
   }
 
   /**
+   * Add a comment to a project
+   */
+  async addComment(projectId: string, userId: string, content: string): Promise<any> {
+    const query = `
+      INSERT INTO project_comments (project_id, user_id, content)
+      VALUES ($1, $2, $3)
+      RETURNING id, project_id, user_id, content, created_at
+    `;
+    
+    const result = await this.db.query(query, [projectId, userId, content]);
+    return {
+      id: result.rows[0].id,
+      projectId: result.rows[0].project_id,
+      userId: result.rows[0].user_id,
+      content: result.rows[0].content,
+      createdAt: new Date(result.rows[0].created_at)
+    };
+  }
+
+  /**
+   * Get comments for a project
+   */
+  async getComments(projectId: string): Promise<any[]> {
+    const query = `
+      SELECT 
+        pc.id, pc.project_id, pc.user_id, pc.content, pc.created_at,
+        u.name as user_name, u.role as user_role
+      FROM project_comments pc
+      JOIN users u ON pc.user_id = u.id
+      WHERE pc.project_id = $1
+      ORDER BY pc.created_at ASC
+    `;
+    
+    const result = await this.db.query(query, [projectId]);
+    return result.rows.map(row => ({
+      id: row.id,
+      projectId: row.project_id,
+      userId: row.user_id,
+      content: row.content,
+      createdAt: new Date(row.created_at),
+      userName: row.user_name,
+      userRole: row.user_role
+    }));
+  }
+
+  /**
    * Maps database row to Project interface
    */
   private mapRowToProject(row: any): Project {

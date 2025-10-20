@@ -50,42 +50,42 @@
   - Validace časových období a maximální délky 5 let
   - _Požadavky: 4.1, 4.2, 4.5_
 
-- [-] 3.4 Napsání unit testů pro datové modely
+- [x] 3.4 Napsání unit testů pro datové modely
   - Testy validace projektových dat
   - Testy pro workflow state přechody
   - _Požadavky: 3.1, 3.3_
 
-- [ ] 4. Implementace detekce konfliktů
-- [ ] 4.1 Vytvoření prostorové detekce konfliktů
+- [x] 4. Implementace detekce konfliktů
+- [x] 4.1 Vytvoření prostorové detekce konfliktů
   - PostGIS dotazy pro detekci překryvů s 20m bufferem
   - Algoritmus pro kontrolu časových překryvů
   - Optimalizace prostorových dotazů s indexy
   - _Požadavky: 7.1, 7.2, 7.4_
 
-- [ ] 4.2 Implementace kontroly moratorií
+- [x] 4.2 Implementace kontroly moratorií
   - Detekce narušení aktivních moratorií
   - Varování při registraci projektů v omezených oblastech
   - _Požadavky: 4.4, 7.4_
 
-- [ ] 4.3 Vytvoření conflict detection API
+- [x] 4.3 Vytvoření conflict detection API
   - REST endpoint pro spuštění detekce konfliktů
   - Asynchronní zpracování s výsledky do 10 sekund
   - Uložení výsledků konfliktů do databáze
   - _Požadavky: 7.1, 7.3, 7.5_
 
-- [ ]* 4.4 Napsání testů pro detekci konfliktů
+- [x] 4.4 Napsání testů pro detekci konfliktů
   - Testy prostorových překryvů s různými geometriemi
   - Testy časových konfliktů a edge cases
   - _Požadavky: 7.1, 7.2_
 
-- [ ] 5. Implementace notifikačního systému
-- [ ] 5.1 Vytvoření email služby
+- [x] 5. Implementace notifikačního systému
+- [x] 5.1 Vytvoření email služby
   - Konfigurace SMTP s SendGrid nebo podobnou službou
   - HTML šablony pro různé typy notifikací
   - Queue systém pro asynchronní odesílání emailů
   - _Požadavky: 5.1, 5.2, 5.4_
 
-- [ ] 5.2 Implementace notifikačních triggerů
+- [-] 5.2 Implementace notifikačních triggerů
   - Automatické odesílání při změnách stavu projektů
   - Notifikace při detekci konfliktů
   - Upozornění na blížící se termíny
@@ -97,26 +97,26 @@
   - _Požadavky: 5.1, 5.2_
 
 - [ ] 6. Vytvoření REST API pro projekty
-- [ ] 6.1 Implementace CRUD operací pro projekty
+- [x] 6.1 Implementace CRUD operací pro projekty
   - GET /api/projects s filtrováním a stránkováním
   - POST /api/projects pro vytvoření nového projektu
   - PUT /api/projects/:id pro aktualizaci
   - DELETE /api/projects/:id s kontrolou oprávnění
   - _Požadavky: 3.1, 3.2, 2.2_
 
-- [ ] 6.2 Implementace workflow API
+- [x] 6.2 Implementace workflow API
   - PUT /api/projects/:id/status pro změny stavů
   - Validace povolených přechodů mezi stavy
   - Automatické spuštění detekce konfliktů při odeslání ke schválení
   - _Požadavky: 3.4, 3.5, 2.4_
 
-- [ ] 6.3 Implementace komentářového systému
+- [x] 6.3 Implementace komentářového systému
   - POST /api/projects/:id/comments pro přidání komentáře
   - GET /api/projects/:id/comments pro načtení historie
   - Validace délky komentářů (max 1000 znaků)
   - _Požadavky: 8.1, 8.2, 8.4_
 
-- [ ]* 6.4 Napsání integration testů pro API
+- [ ] 6.4 Napsání integration testů pro API
   - E2E testy pro kompletní workflow projektů
   - Testy autorizace a územních omezení
   - _Požadavky: 3.1, 3.4, 2.2_

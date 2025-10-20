@@ -12,7 +12,10 @@ import {
   apiRateLimiter,
   corsOptions 
 } from './middleware';
-import routes from './routes';
+import routes, { initializeRoutes } from './routes';
+import { pool } from './config/database';
+import { notificationTriggers } from './services/NotificationTriggers';
+import { emailService } from './services/EmailService';
 
 // Create Express application
 const app = express();
@@ -52,6 +55,22 @@ app.use(requestId);
 // Body parsing middleware
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+
+// Initialize routes with database connection
+initializeRoutes(pool);
+
+// Initialize notification system
+if (config.nodeEnv !== 'test') {
+  // Verify email connection
+  emailService.verifyConnection().then(isConnected => {
+    if (isConnected) {
+      // Initialize notification triggers and schedulers
+      notificationTriggers.initialize();
+    } else {
+      console.warn('⚠️ Email service not available - notifications will be queued but not sent');
+    }
+  });
+}
 
 // API routes with additional rate limiting
 app.use(config.api.prefix, apiRateLimiter, routes);
