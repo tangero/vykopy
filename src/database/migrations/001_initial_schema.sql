@@ -7,7 +7,7 @@
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 -- Users table
-CREATE TABLE users (
+CREATE TABLE IF NOT EXISTS users (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     email VARCHAR(255) UNIQUE NOT NULL,
     password_hash VARCHAR(255) NOT NULL,
@@ -20,7 +20,7 @@ CREATE TABLE users (
 );
 
 -- User territorial permissions
-CREATE TABLE user_territories (
+CREATE TABLE IF NOT EXISTS user_territories (
     user_id UUID REFERENCES users(id) ON DELETE CASCADE,
     municipality_code VARCHAR(10) NOT NULL,
     municipality_name VARCHAR(255) NOT NULL,
@@ -28,7 +28,7 @@ CREATE TABLE user_territories (
 );
 
 -- Projects table
-CREATE TABLE projects (
+CREATE TABLE IF NOT EXISTS projects (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     name VARCHAR(255) NOT NULL,
     applicant_id UUID REFERENCES users(id) NOT NULL,
@@ -52,7 +52,7 @@ CREATE TABLE projects (
 );
 
 -- Moratoriums table
-CREATE TABLE moratoriums (
+CREATE TABLE IF NOT EXISTS moratoriums (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     name VARCHAR(255) NOT NULL,
     geometry TEXT NOT NULL, -- GeoJSON format when PostGIS unavailable, GEOMETRY(Geometry, 4326) when available
@@ -70,7 +70,7 @@ CREATE TABLE moratoriums (
 );
 
 -- Project comments table
-CREATE TABLE project_comments (
+CREATE TABLE IF NOT EXISTS project_comments (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     project_id UUID REFERENCES projects(id) ON DELETE CASCADE,
     user_id UUID REFERENCES users(id) NOT NULL,
@@ -80,7 +80,7 @@ CREATE TABLE project_comments (
 );
 
 -- Audit logs table
-CREATE TABLE audit_logs (
+CREATE TABLE IF NOT EXISTS audit_logs (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     entity_type VARCHAR(50) NOT NULL, -- 'project', 'user', 'moratorium'
     entity_id UUID NOT NULL,
