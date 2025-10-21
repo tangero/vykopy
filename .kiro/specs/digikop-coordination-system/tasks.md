@@ -165,7 +165,7 @@
   - Testy pro formuláře a validace
   - _Požadavky: 8.1, 8.2_
 
-- [-] 9. Implementace mapového rozhraní
+- [x] 9. Implementace mapového rozhraní
 - [x] 9.1 Integrace Mapbox GL JS
   - Nastavení Mapbox účtu a API klíčů
   - Základní mapová komponenta s ovládacími prvky
