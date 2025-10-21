@@ -1,38 +1,14 @@
 import React from 'react';
-import { useOutletContext } from 'react-router-dom';
-import MapContainer from '../components/MapContainer';
-import ProjectDetail from '../components/ProjectDetail';
-
-interface LayoutContext {
-  openSidebar: (content: React.ReactNode) => void;
-  closeSidebar: () => void;
-}
+import { useSelector } from 'react-redux';
+import type { RootState } from '../store';
+import ApplicantProjectList from '../components/ApplicantProjectList';
 
 const ProjectsPage: React.FC = () => {
-  const { openSidebar } = useOutletContext<LayoutContext>();
+  const { user } = useSelector((state: RootState) => state.auth);
 
-  const handleProjectClick = (projectId: string) => {
-    // Open project details in sidebar
-    openSidebar(<ProjectDetail projectId={projectId} />);
-  };
-
-  const handleGeometryDrawn = (geometry: GeoJSON.Geometry) => {
-    console.log('Geometry drawn:', geometry);
-    // Here you would typically save the geometry or use it in a form
-    alert(`Nakreslena geometrie typu: ${geometry.type}`);
-  };
-
-  return (
-    <div className="projects-page">
-      <MapContainer 
-        onProjectClick={handleProjectClick}
-        onGeometryDrawn={handleGeometryDrawn}
-        showDrawingTools={true}
-        showFilters={true}
-        showSearch={true}
-      />
-    </div>
-  );
+  // For now, show the applicant project list for all users
+  // In the future, coordinators might have a different view
+  return <ApplicantProjectList />;
 };
 
 export default ProjectsPage;

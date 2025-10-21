@@ -1,0 +1,267 @@
+.moratorium-warning {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.moratorium-warning.active {
+  border-left: 4px solid #dc2626;
+}
+
+.moratorium-warning.inactive {
+  border-left: 4px solid #f59e0b;
+}
+
+.moratorium-warning-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 24px 16px;
+  background: #fef2f2;
+  border-bottom: 1px solid #fecaca;
+}
+
+.moratorium-warning.inactive .moratorium-warning-header {
+  background: #fffbeb;
+  border-bottom-color: #fed7aa;
+}
+
+.moratorium-icon {
+  font-size: 24px;
+}
+
+.moratorium-warning h3 {
+  margin: 0;
+  color: #991b1b;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.moratorium-warning.inactive h3 {
+  color: #92400e;
+}
+
+.moratorium-summary {
+  padding: 16px 24px;
+  background: #fefefe;
+}
+
+.moratorium-summary p {
+  margin: 0;
+  color: #374151;
+  line-height: 1.5;
+}
+
+.active-note {
+  color: #dc2626;
+  font-weight: 500;
+}
+
+.moratorium-list {
+  padding: 0 24px;
+}
+
+.moratorium-item {
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+
+.moratorium-item.active {
+  border-color: #fca5a5;
+  background: #fef2f2;
+}
+
+.moratorium-item.inactive {
+  border-color: #fed7aa;
+  background: #fffbeb;
+}
+
+.moratorium-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.moratorium-item.active .moratorium-header {
+  background: #fef2f2;
+  border-bottom-color: #fca5a5;
+}
+
+.moratorium-item.inactive .moratorium-header {
+  background: #fffbeb;
+  border-bottom-color: #fed7aa;
+}
+
+.moratorium-header h4 {
+  margin: 0;
+  color: #1f2937;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.status-badge {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.status-badge.active {
+  background: #dc2626;
+  color: white;
+}
+
+.status-badge.inactive {
+  background: #f59e0b;
+  color: white;
+}
+
+.moratorium-details {
+  padding: 16px;
+}
+
+.moratorium-details p {
+  margin: 0 0 8px 0;
+  color: #374151;
+  line-height: 1.4;
+}
+
+.moratorium-details p:last-child {
+  margin-bottom: 0;
+}
+
+.moratorium-details strong {
+  color: #1f2937;
+  font-weight: 600;
+}
+
+.moratorium-exceptions {
+  margin-top: 12px;
+  padding: 12px;
+  background: #f0f9ff;
+  border: 1px solid #0ea5e9;
+  border-radius: 4px;
+}
+
+.moratorium-exceptions p {
+  margin: 0 0 4px 0;
+}
+
+.exceptions-text {
+  font-style: italic;
+  color: #0369a1;
+}
+
+.moratorium-actions {
+  padding: 20px 24px;
+  background: #f9fafb;
+  border-top: 1px solid #e5e7eb;
+}
+
+.action-info {
+  margin-bottom: 16px;
+}
+
+.action-info p {
+  margin: 0;
+  padding: 12px 16px;
+  border-radius: 6px;
+  line-height: 1.5;
+}
+
+.active-warning {
+  background: #fef2f2;
+  border: 1px solid #fca5a5;
+  color: #991b1b;
+}
+
+.inactive-info {
+  background: #fffbeb;
+  border: 1px solid #fed7aa;
+  color: #92400e;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 120px;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: #3b82f6;
+  color: white;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: #2563eb;
+}
+
+.btn-secondary {
+  background: #f3f4f6;
+  color: #374151;
+  border: 1px solid #d1d5db;
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: #e5e7eb;
+}
+
+.btn-warning {
+  background: #f59e0b;
+  color: white;
+}
+
+.btn-warning:hover:not(:disabled) {
+  background: #d97706;
+}
+
+@media (max-width: 640px) {
+  .moratorium-warning-header,
+  .moratorium-summary,
+  .moratorium-list,
+  .moratorium-actions {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  
+  .moratorium-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  
+  .action-buttons {
+    flex-direction: column;
+  }
+  
+  .btn {
+    width: 100%;
+  }
+}

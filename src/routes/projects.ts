@@ -6,6 +6,14 @@ import { ConflictDetectionService } from '../services/ConflictDetectionService';
 import { authenticateToken } from '../middleware/auth';
 import { RBACMiddleware } from '../middleware/rbac';
 import { createProjectSchema, updateProjectSchema } from '../validation/schemas';
+import { 
+  validateProjectInput, 
+  validateCommentInput, 
+  validateUUID, 
+  validatePagination,
+  handleValidationErrors,
+  conflictDetectionRateLimit
+} from '../middleware/security';
 import { ProjectState } from '../types';
 import { notificationTriggers } from '../services/NotificationTriggers';
 
@@ -21,7 +29,11 @@ export const initializeProjectRoutes = (db: Pool) => {
 };
 
 // GET /api/projects - List projects with filters
-router.get('/', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+router.get('/', 
+  authenticateToken, 
+  validatePagination, 
+  handleValidationErrors, 
+  async (req: Request, res: Response): Promise<void> => {
   try {
     const {
       state,
@@ -443,7 +455,7 @@ router.post('/:id/comments', authenticateToken, async (req: Request, res: Respon
     const { id } = req.params;
     if (!validateId(id, res, 'Project ID')) return;
     
-    const { content } = req.body;
+    const { content, attachmentUrl } = req.body;
 
     if (!content || content.trim().length === 0) {
       res.status(400).json({
@@ -507,7 +519,7 @@ router.post('/:id/comments', authenticateToken, async (req: Request, res: Respon
       return;
     }
 
-    const comment = await projectModel.addComment(id, req.user.id, content.trim());
+    const comment = await projectModel.addComment(id, req.user.id, content.trim(), attachmentUrl);
 
     // Trigger notifications for new comment
     setTimeout(async () => {
@@ -676,6 +688,201 @@ function ensureUserId(req: Request, res: Response): string | null {
   }
   return req.user.id;
 }
+
+// GET /api/projects/:id/history - Get project history
+router.get('/:id/history', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { id } = req.params;
+    if (!validateId(id, res, 'Project ID')) return;
+
+    const user = (req as any).user;
+    
+    // Check if user has access to this project
+    const project = await projectModel.findById(id);
+    if (!project) {
+      res.status(404).json({
+        error: {
+          code: 'PROJECT_NOT_FOUND',
+          message: 'Project not found',
+          timestamp: new Date().toISOString()
+        }
+      });
+      return;
+    }
+
+    // Check permissions
+    const hasAccess = await RBACMiddleware.checkProjectAccess(user, project);
+    if (!hasAccess) {
+      res.status(403).json({
+        error: {
+          code: 'ACCESS_DENIED',
+          message: 'You do not have permission to view this project history',
+          timestamp: new Date().toISOString()
+        }
+      });
+      return;
+    }
+
+    const { startDate, endDate, action, userId, page = '1', limit = '50' } = req.query;
+
+    const filters: any = {
+      page: parseInt(page as string),
+      limit: Math.min(parseInt(limit as string), 100)
+    };
+
+    if (startDate) filters.startDate = new Date(startDate as string);
+    if (endDate) filters.endDate = new Date(endDate as string);
+    if (action) filters.action = action as string;
+    if (userId) filters.userId = userId as string;
+
+    const { ProjectHistoryService } = await import('../services/ProjectHistoryService');
+    const historyService = new ProjectHistoryService(projectModel['db']);
+    
+    const result = await historyService.getProjectHistory(id, filters);
+
+    res.json({
+      history: result.entries,
+      pagination: {
+        page: filters.page,
+        limit: filters.limit,
+        total: result.total,
+        totalPages: Math.ceil(result.total / filters.limit)
+      }
+    });
+
+  } catch (error) {
+    console.error('Error fetching project history:', error);
+    res.status(500).json({
+      error: {
+        code: 'INTERNAL_ERROR',
+        message: 'Failed to fetch project history',
+        timestamp: new Date().toISOString()
+      }
+    });
+  }
+});
+
+// GET /api/projects/:id/history/export - Export project history to CSV
+router.get('/:id/history/export', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { id } = req.params;
+    if (!validateId(id, res, 'Project ID')) return;
+
+    const user = (req as any).user;
+    
+    // Check if user has access to this project
+    const project = await projectModel.findById(id);
+    if (!project) {
+      res.status(404).json({
+        error: {
+          code: 'PROJECT_NOT_FOUND',
+          message: 'Project not found',
+          timestamp: new Date().toISOString()
+        }
+      });
+      return;
+    }
+
+    // Check permissions
+    const hasAccess = await RBACMiddleware.checkProjectAccess(user, project);
+    if (!hasAccess) {
+      res.status(403).json({
+        error: {
+          code: 'ACCESS_DENIED',
+          message: 'You do not have permission to export this project history',
+          timestamp: new Date().toISOString()
+        }
+      });
+      return;
+    }
+
+    const { startDate, endDate, action, userId } = req.query;
+
+    const filters: any = {};
+    if (startDate) filters.startDate = new Date(startDate as string);
+    if (endDate) filters.endDate = new Date(endDate as string);
+    if (action) filters.action = action as string;
+    if (userId) filters.userId = userId as string;
+
+    const { ProjectHistoryService } = await import('../services/ProjectHistoryService');
+    const historyService = new ProjectHistoryService(projectModel['db']);
+    
+    const csvContent = await historyService.exportProjectHistoryToCsv(id, filters);
+
+    // Set CSV headers
+    res.setHeader('Content-Type', 'text/csv');
+    res.setHeader('Content-Disposition', `attachment; filename="project-${id}-history.csv"`);
+    
+    res.send(csvContent);
+
+  } catch (error) {
+    console.error('Error exporting project history:', error);
+    res.status(500).json({
+      error: {
+        code: 'INTERNAL_ERROR',
+        message: 'Failed to export project history',
+        timestamp: new Date().toISOString()
+      }
+    });
+  }
+});
+
+// GET /api/projects/:id/timeline - Get project state timeline
+router.get('/:id/timeline', authenticateToken, async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { id } = req.params;
+    if (!validateId(id, res, 'Project ID')) return;
+
+    const user = (req as any).user;
+    
+    // Check if user has access to this project
+    const project = await projectModel.findById(id);
+    if (!project) {
+      res.status(404).json({
+        error: {
+          code: 'PROJECT_NOT_FOUND',
+          message: 'Project not found',
+          timestamp: new Date().toISOString()
+        }
+      });
+      return;
+    }
+
+    // Check permissions
+    const hasAccess = await RBACMiddleware.checkProjectAccess(user, project);
+    if (!hasAccess) {
+      res.status(403).json({
+        error: {
+          code: 'ACCESS_DENIED',
+          message: 'You do not have permission to view this project timeline',
+          timestamp: new Date().toISOString()
+        }
+      });
+      return;
+    }
+
+    const { ProjectHistoryService } = await import('../services/ProjectHistoryService');
+    const historyService = new ProjectHistoryService(projectModel['db']);
+    
+    const timeline = await historyService.getProjectStateTimeline(id);
+    const statistics = await historyService.getProjectChangeStatistics(id);
+
+    res.json({
+      timeline,
+      statistics
+    });
+
+  } catch (error) {
+    console.error('Error fetching project timeline:', error);
+    res.status(500).json({
+      error: {
+        code: 'INTERNAL_ERROR',
+        message: 'Failed to fetch project timeline',
+        timestamp: new Date().toISOString()
+      }
+    });
+  }
+});
 
 // Helper function to validate route parameter ID
 function validateId(id: string | undefined, res: Response, paramName: string = 'ID'): id is string {

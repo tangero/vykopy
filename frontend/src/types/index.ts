@@ -47,11 +47,27 @@ export interface Moratorium {
   name: string;
   geometry: Geometry;
   reason: string;
-  reason_detail?: string;
-  valid_from: string;
-  valid_to: string;
+  reasonDetail?: string;
+  validFrom: Date;
+  validTo: Date;
   exceptions?: string;
-  created_by: string;
-  municipality_code: string;
-  created_at: string;
+  createdBy: string;
+  municipalityCode: string;
+  createdAt: Date;
+}
+
+export interface ProjectComment {
+  id: string;
+  projectId: string;
+  userId: string;
+  userName: string;
+  userRole: string;
+  content: string;
+  attachmentUrl?: string;
+  createdAt: string;
+}
+
+export interface CreateCommentRequest {
+  content: string;
+  attachmentUrl?: string;
 }

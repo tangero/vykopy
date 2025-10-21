@@ -95,6 +95,51 @@ class ApiClient {
       method: 'POST',
     });
   }
+
+  // Generic HTTP methods
+  async get<T>(endpoint: string, options?: RequestInit): Promise<T> {
+    return this.request<T>(endpoint, { ...options, method: 'GET' });
+  }
+
+  async post<T>(endpoint: string, data?: any, options?: RequestInit): Promise<T> {
+    const config: RequestInit = {
+      ...options,
+      method: 'POST',
+    };
+
+    // Handle FormData (for file uploads)
+    if (data instanceof FormData) {
+      config.body = data;
+      // Remove Content-Type header to let browser set it with boundary
+      const headers = { ...config.headers };
+      delete (headers as any)['Content-Type'];
+      config.headers = headers;
+    } else if (data) {
+      config.body = JSON.stringify(data);
+    }
+
+    return this.request<T>(endpoint, config);
+  }
+
+  async put<T>(endpoint: string, data?: any, options?: RequestInit): Promise<T> {
+    return this.request<T>(endpoint, {
+      ...options,
+      method: 'PUT',
+      body: data ? JSON.stringify(data) : undefined,
+    });
+  }
+
+  async delete<T>(endpoint: string, options?: RequestInit): Promise<T> {
+    return this.request<T>(endpoint, { ...options, method: 'DELETE' });
+  }
 }
 
 export const apiClient = new ApiClient(API_BASE_URL);
+
+// Export a simple api object for backward compatibility
+export const api = {
+  get: <T>(endpoint: string, options?: RequestInit) => apiClient.get<T>(endpoint, options),
+  post: <T>(endpoint: string, data?: any, options?: RequestInit) => apiClient.post<T>(endpoint, data, options),
+  put: <T>(endpoint: string, data?: any, options?: RequestInit) => apiClient.put<T>(endpoint, data, options),
+  delete: <T>(endpoint: string, options?: RequestInit) => apiClient.delete<T>(endpoint, options),
+};

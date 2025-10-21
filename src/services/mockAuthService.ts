@@ -54,7 +54,7 @@ export class MockAuthService {
     }
 
     // Hash password
-    const password_hash = await bcrypt.hash(userData.password, config.auth.bcryptRounds);
+    const password_hash = await bcrypt.hash(userData.password, config.bcrypt.rounds);
 
     // Create new user
     const newUser: MockUser = {
@@ -92,8 +92,8 @@ export class MockAuthService {
         email: user.email, 
         role: user.role 
       },
-      config.auth.jwtSecret,
-      { expiresIn: config.auth.jwtExpiresIn }
+      config.jwt.secret,
+      { expiresIn: config.jwt.expiresIn }
     );
 
     return { user, token };
@@ -109,7 +109,7 @@ export class MockAuthService {
 
   static verifyToken(token: string): { userId: string; email: string; role: string } {
     try {
-      const decoded = jwt.verify(token, config.auth.jwtSecret) as any;
+      const decoded = jwt.verify(token, config.jwt.secret) as any;
       return {
         userId: decoded.userId,
         email: decoded.email,

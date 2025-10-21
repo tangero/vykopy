@@ -4,6 +4,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import type { RootState, AppDispatch } from '../../store';
 import { loginUser } from '../../store/thunks/authThunks';
 import { clearError } from '../../store/slices/authSlice';
+import { GovButton, GovInput, GovCard, Alert } from '../gov';
 import './auth.css';
 
 interface FormData {
@@ -111,74 +112,69 @@ const LoginForm: React.FC = () => {
   };
 
   return (
-    <div className="login-form-container">
-      <div className="login-form-card">
-        <div className="login-header">
-          <h1>Přihlášení do DigiKop</h1>
-          <p>Koordinační systém pro výkopové práce</p>
-        </div>
+    <div className="gov-auth-container">
+      <GovCard 
+        className="gov-auth-card"
+        title="Přihlášení do DigiKop"
+        subtitle="Koordinační systém pro výkopové práce"
+      >
+        <form onSubmit={handleSubmit} className="gov-form">
+          <GovInput
+            label="Email"
+            type="email"
+            value={formData.email}
+            onChange={(e) => handleInputChange({ target: { name: 'email', value: e.target.value } } as React.ChangeEvent<HTMLInputElement>)}
+            onBlur={(e) => handleBlur({ target: { name: 'email', value: e.target.value } } as React.FocusEvent<HTMLInputElement>)}
+            placeholder="vas.email@example.com"
+            disabled={isLoading}
+            error={formErrors.email && touched.email ? formErrors.email : undefined}
+            required
+            fullWidth
+            data-testid="email-input"
+          />
 
-        <form onSubmit={handleSubmit} className="login-form">
-          <div className="form-group">
-            <label htmlFor="email">Email</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={formData.email}
-              onChange={handleInputChange}
-              onBlur={handleBlur}
-              className={`form-input ${formErrors.email && touched.email ? 'error' : ''}`}
-              placeholder="vas.email@example.com"
-              disabled={isLoading}
-            />
-            {formErrors.email && touched.email && (
-              <span className="error-message">{formErrors.email}</span>
-            )}
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="password">Heslo</label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              value={formData.password}
-              onChange={handleInputChange}
-              onBlur={handleBlur}
-              className={`form-input ${formErrors.password && touched.password ? 'error' : ''}`}
-              placeholder="Vaše heslo"
-              disabled={isLoading}
-            />
-            {formErrors.password && touched.password && (
-              <span className="error-message">{formErrors.password}</span>
-            )}
-          </div>
+          <GovInput
+            label="Heslo"
+            type="password"
+            value={formData.password}
+            onChange={(e) => handleInputChange({ target: { name: 'password', value: e.target.value } } as React.ChangeEvent<HTMLInputElement>)}
+            onBlur={(e) => handleBlur({ target: { name: 'password', value: e.target.value } } as React.FocusEvent<HTMLInputElement>)}
+            placeholder="Vaše heslo"
+            disabled={isLoading}
+            error={formErrors.password && touched.password ? formErrors.password : undefined}
+            required
+            fullWidth
+            data-testid="password-input"
+          />
 
           {error && (
-            <div className="error-banner">
+            <Alert color="error" className="gov-auth-error">
               {error}
-            </div>
+            </Alert>
           )}
 
-          <button
+          <GovButton
             type="submit"
-            className="login-button"
+            variant="primary"
+            size="large"
             disabled={isLoading}
+            loading={isLoading}
+            fullWidth
+            data-testid="login-button"
           >
             {isLoading ? 'Přihlašuji...' : 'Přihlásit se'}
-          </button>
+          </GovButton>
         </form>
 
-        <div className="login-footer">
+        <div className="gov-auth-footer">
           <p>
             Nemáte účet?{' '}
-            <Link to="/register" className="register-link">
+            <Link to="/register" className="gov-link">
               Zaregistrujte se
             </Link>
           </p>
         </div>
-      </div>
+      </GovCard>
     </div>
   );
 };

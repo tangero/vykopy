@@ -4,6 +4,7 @@ import LoginPage from '../pages/LoginPage';
 import RegisterPage from '../pages/RegisterPage';
 import DashboardPage from '../pages/DashboardPage';
 import ProjectsPage from '../pages/ProjectsPage';
+import CreateProjectPage from '../pages/CreateProjectPage';
 import ProtectedRoute from '../components/auth/ProtectedRoute';
 
 export const router = createBrowserRouter([
@@ -34,6 +35,10 @@ export const router = createBrowserRouter([
       {
         path: 'projects',
         element: <ProjectsPage />,
+      },
+      {
+        path: 'projects/new',
+        element: <CreateProjectPage />,
       },
     ],
   },

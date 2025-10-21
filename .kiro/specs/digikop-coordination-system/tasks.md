@@ -195,21 +195,21 @@
   - Testy kreslicích nástrojů a geometrické validace
   - _Požadavky: 6.1, 3.1_
 
-- [ ] 10. Implementace formulářů pro projekty
-- [ ] 10.1 Vytvoření multi-step formuláře pro nové projekty
+- [x] 10. Implementace formulářů pro projekty
+- [x] 10.1 Vytvoření multi-step formuláře pro nové projekty
   - Krok 1: Základní informace (název, žadatel, zhotovitel)
   - Krok 2: Vyznačení lokality na mapě
   - Krok 3: Časový rámec a kategorizace
   - Validace každého kroku před pokračováním
   - _Požadavky: 3.1, 3.2, 3.3_
 
-- [ ] 10.2 Implementace draft/submit funkcionalité
+- [x] 10.2 Implementace draft/submit funkcionalité
   - Ukládání rozpracovaných projektů jako koncepty
   - Automatické ukládání při změnách formuláře
   - Odeslání ke schválení s validací povinných polí
   - _Požadavky: 3.3, 3.5_
 
-- [ ] 10.3 Integrace s conflict detection
+- [x] 10.3 Integrace s conflict detection
   - Automatické spuštění detekce při odeslání
   - Zobrazení varování o detekovaných konfliktech
   - Možnost pokračovat i přes varování
@@ -220,20 +220,20 @@
   - Testy validace a error handling
   - _Požadavky: 3.1, 3.3_
 
-- [ ] 11. Implementace dashboardu a přehledů
-- [ ] 11.1 Vytvoření dashboardu pro koordinátory
+- [x] 11. Implementace dashboardu a přehledů
+- [x] 11.1 Vytvoření dashboardu pro koordinátory
   - Přehled projektů čekajících na schválení
   - Statistiky konfliktů a aktivních projektů
   - Seznam nedávných událostí a notifikací
   - _Požadavky: 2.1, 2.2, 2.4_
 
-- [ ] 11.2 Implementace seznamu projektů pro žadatele
+- [x] 11.2 Implementace seznamu projektů pro žadatele
   - Tabulkový přehled vlastních projektů
   - Filtrování podle stavu a časového období
   - Rychlé akce (editace, duplikace, zrušení)
   - _Požadavky: 3.1, 3.2_
 
-- [ ] 11.3 Vytvoření detailního pohledu na projekt
+- [x] 11.3 Vytvoření detailního pohledu na projekt
   - Kompletní informace o projektu v sidebar panelu
   - Historie změn a komentářů
   - Akční tlačítka podle role uživatele
@@ -244,20 +244,20 @@
   - Testy filtrování a řazení
   - _Požadavky: 2.1, 3.1_
 
-- [ ] 12. Implementace správy moratorií
-- [ ] 12.1 Vytvoření formuláře pro moratoria
+- [x] 12. Implementace správy moratorií
+- [x] 12.1 Vytvoření formuláře pro moratoria
   - Kreslení omezených oblastí na mapě
   - Formulář s důvodem, časovým obdobím a výjimkami
   - Validace maximální délky 5 let
   - _Požadavky: 4.1, 4.2, 4.5_
 
-- [ ] 12.2 Vizualizace moratorií na mapě
+- [x] 12.2 Vizualizace moratorií na mapě
   - Červené šrafování s průhledností 40%
   - Tooltips s informacemi o moratoriu
   - Toggle pro zapnutí/vypnutí vrstvy moratorií
   - _Požadavky: 4.3, 6.3_
 
-- [ ] 12.3 Integrace kontrol moratorií do workflow
+- [x] 12.3 Integrace kontrol moratorií do workflow
   - Automatické varování při registraci v omezené oblasti
   - Možnost koordinátora ignorovat moratorium při schvalování
   - _Požadavky: 4.4, 2.4_
@@ -267,14 +267,14 @@
   - Testy detekce narušení moratorií
   - _Požadavky: 4.1, 4.4_
 
-- [ ] 13. Implementace komentářového systému
-- [ ] 13.1 Vytvoření komentářové komponenty
+- [x] 13. Implementace komentářového systému
+- [x] 13.1 Vytvoření komentářové komponenty
   - Formulář pro přidávání komentářů s validací délky
   - Zobrazení historie komentářů s časovými razítky
   - Support pro @mentions s automatickými notifikacemi
   - _Požadavky: 8.1, 8.2, 8.4_
 
-- [ ] 13.2 Implementace file upload pro přílohy
+- [x] 13.2 Implementace file upload pro přílohy
   - Upload souborů s validací typu a velikosti
   - Integrace s AWS S3 nebo lokálním úložištěm
   - Preview a download funkcionalita
@@ -285,14 +285,14 @@
   - Testy file upload funkcionalité
   - _Požadavky: 8.1, 8.2_
 
-- [ ] 14. Implementace audit trail a historie
-- [ ] 14.1 Vytvoření audit logging systému
+- [-] 14. Implementace audit trail a historie
+- [x] 14.1 Vytvoření audit logging systému
   - Automatické logování všech změn projektů
   - Zachycení user ID, IP adresy a timestampu
   - JSON diff pro sledování změn hodnot
   - _Požadavky: 8.3, 8.5_
 
-- [ ] 14.2 Implementace historie projektů
+- [x] 14.2 Implementace historie projektů
   - Zobrazení timeline všech změn projektu
   - Filtrování dokončených a zrušených projektů
   - Export historie do CSV formátu
@@ -303,20 +303,27 @@
   - Testy anonymizace citlivých dat
   - _Požadavky: 8.3_
 
-- [ ] 15. Finalizace a optimalizace
-- [ ] 15.1 Performance optimalizace
+- [x] 14.4 Implementace českého Gov Design System
+  - Instalace @gov-design-system-ce/react balíčku
+  - Import stylů, ikon a fontů podle oficiálního návodu
+  - Přepracování existujících komponent na Gov DS komponenty
+  - Konfigurace paths pro ikony a fonty
+  - _Požadavky: 6.1, 6.2, 8.1_
+
+- [x] 15. Finalizace a optimalizace
+- [x] 15.1 Performance optimalizace
   - Optimalizace PostGIS dotazů s explain analyze
   - Frontend lazy loading a code splitting
   - Caching strategií pro mapové dlaždice
   - _Požadavky: 7.5, 6.5_
 
-- [ ] 15.2 Bezpečnostní hardening
+- [x] 15.2 Bezpečnostní hardening
   - HTTPS konfigurace s security headers
   - Rate limiting pro API endpoints
   - Input sanitization a XSS ochrana
   - _Požadavky: 1.4, 7.1_
 
-- [ ] 15.3 Railway deployment a monitoring setup
+- [x] 15.3 Railway deployment a monitoring setup
   - Vytvoření Railway projektu a propojení s GitHub repo
   - Konfigurace PostgreSQL databáze s PostGIS rozšířením
   - Nastavení environment variables pro produkci
@@ -324,7 +331,7 @@
   - Integrace Sentry pro error tracking a monitoring
   - _Požadavky: Všechny_
 
-- [ ]* 15.4 Kompletní E2E testování
+- [x] 15.4 Kompletní E2E testování
   - Playwright testy pro všechny user journeys
   - Cross-browser kompatibilita testy
   - Performance a load testing

@@ -1,0 +1,1556 @@
+<testsuites id="" name="" tests="364" failures="0" skipped="364" errors="0" time="0.15696999999999997">
+<testsuite name="tests/auth.spec.ts" timestamp="2025-10-21T09:00:28.242Z" hostname="chromium" tests="7" failures="0" skipped="7" time="0" errors="0">
+<testcase name="Authentication Flow › should login as regional administrator" classname="tests/auth.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Authentication Flow › should login as municipal coordinator" classname="tests/auth.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Authentication Flow › should login as applicant" classname="tests/auth.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Authentication Flow › should reject invalid credentials" classname="tests/auth.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Authentication Flow › should logout successfully" classname="tests/auth.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Authentication Flow › should redirect unauthenticated users to login" classname="tests/auth.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Authentication Flow › should maintain session after page refresh" classname="tests/auth.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/load-testing.spec.ts" timestamp="2025-10-21T09:00:28.242Z" hostname="chromium" tests="5" failures="0" skipped="5" time="0" errors="0">
+<testcase name="Load Testing › concurrent user sessions" classname="tests/load-testing.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Load Testing › API endpoint stress testing" classname="tests/load-testing.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Load Testing › database performance under concurrent writes" classname="tests/load-testing.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Load Testing › memory usage under extended session" classname="tests/load-testing.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Load Testing › network bandwidth efficiency" classname="tests/load-testing.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/map-interactions.spec.ts" timestamp="2025-10-21T09:00:28.242Z" hostname="chromium" tests="10" failures="0" skipped="10" time="0" errors="0">
+<testcase name="Map Interactions › should load map with all layers" classname="tests/map-interactions.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Map Interactions › should toggle map layers" classname="tests/map-interactions.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Map Interactions › should search for locations using geocoding" classname="tests/map-interactions.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Map Interactions › should draw different geometry types" classname="tests/map-interactions.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Map Interactions › should display project tooltips on hover" classname="tests/map-interactions.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Map Interactions › should open project details on click" classname="tests/map-interactions.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Map Interactions › should filter projects on map" classname="tests/map-interactions.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Map Interactions › should show conflict indicators on map" classname="tests/map-interactions.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Map Interactions › should display moratoriums on map" classname="tests/map-interactions.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Map Interactions › should handle map performance with many projects" classname="tests/map-interactions.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/moratorium-management.spec.ts" timestamp="2025-10-21T09:00:28.242Z" hostname="chromium" tests="7" failures="0" skipped="7" time="0" errors="0">
+<testcase name="Moratorium Management › coordinator can create moratorium" classname="tests/moratorium-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Moratorium Management › moratorium validation rules" classname="tests/moratorium-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Moratorium Management › moratorium warnings during project creation" classname="tests/moratorium-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Moratorium Management › coordinator can approve project despite moratorium" classname="tests/moratorium-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Moratorium Management › moratorium editing and deletion" classname="tests/moratorium-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Moratorium Management › moratorium expiration handling" classname="tests/moratorium-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Moratorium Management › moratorium map visualization" classname="tests/moratorium-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/performance.spec.ts" timestamp="2025-10-21T09:00:28.242Z" hostname="chromium" tests="8" failures="0" skipped="8" time="0" errors="0">
+<testcase name="Performance Tests › page load performance" classname="tests/performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › API response times" classname="tests/performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › map rendering performance with many projects" classname="tests/performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › form submission performance" classname="tests/performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › conflict detection performance" classname="tests/performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › large dataset handling" classname="tests/performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › memory usage monitoring" classname="tests/performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › network efficiency" classname="tests/performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/project-workflow.spec.ts" timestamp="2025-10-21T09:00:28.242Z" hostname="chromium" tests="5" failures="0" skipped="5" time="0" errors="0">
+<testcase name="Project Workflow › complete project lifecycle - applicant creates, coordinator approves" classname="tests/project-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Project Workflow › project rejection workflow" classname="tests/project-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Project Workflow › project with conflicts workflow" classname="tests/project-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Project Workflow › project comments and communication" classname="tests/project-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Project Workflow › project editing and updates" classname="tests/project-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/user-management.spec.ts" timestamp="2025-10-21T09:00:28.242Z" hostname="chromium" tests="10" failures="0" skipped="10" time="0" errors="0">
+<testcase name="User Management › regional admin can manage users" classname="tests/user-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="User Management › regional admin can create new coordinator" classname="tests/user-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="User Management › regional admin can assign territories to coordinator" classname="tests/user-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="User Management › coordinator cannot access admin functions" classname="tests/user-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="User Management › applicant cannot access coordinator functions" classname="tests/user-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="User Management › user registration workflow" classname="tests/user-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="User Management › user profile management" classname="tests/user-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="User Management › password change functionality" classname="tests/user-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="User Management › user deactivation and reactivation" classname="tests/user-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="User Management › territorial access restrictions" classname="tests/user-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/auth.spec.ts" timestamp="2025-10-21T09:00:28.242Z" hostname="firefox" tests="7" failures="0" skipped="7" time="0" errors="0">
+<testcase name="Authentication Flow › should login as regional administrator" classname="tests/auth.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Authentication Flow › should login as municipal coordinator" classname="tests/auth.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Authentication Flow › should login as applicant" classname="tests/auth.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Authentication Flow › should reject invalid credentials" classname="tests/auth.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Authentication Flow › should logout successfully" classname="tests/auth.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Authentication Flow › should redirect unauthenticated users to login" classname="tests/auth.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Authentication Flow › should maintain session after page refresh" classname="tests/auth.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/load-testing.spec.ts" timestamp="2025-10-21T09:00:28.242Z" hostname="firefox" tests="5" failures="0" skipped="5" time="0" errors="0">
+<testcase name="Load Testing › concurrent user sessions" classname="tests/load-testing.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Load Testing › API endpoint stress testing" classname="tests/load-testing.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Load Testing › database performance under concurrent writes" classname="tests/load-testing.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Load Testing › memory usage under extended session" classname="tests/load-testing.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Load Testing › network bandwidth efficiency" classname="tests/load-testing.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/map-interactions.spec.ts" timestamp="2025-10-21T09:00:28.242Z" hostname="firefox" tests="10" failures="0" skipped="10" time="0" errors="0">
+<testcase name="Map Interactions › should load map with all layers" classname="tests/map-interactions.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Map Interactions › should toggle map layers" classname="tests/map-interactions.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Map Interactions › should search for locations using geocoding" classname="tests/map-interactions.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Map Interactions › should draw different geometry types" classname="tests/map-interactions.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Map Interactions › should display project tooltips on hover" classname="tests/map-interactions.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Map Interactions › should open project details on click" classname="tests/map-interactions.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Map Interactions › should filter projects on map" classname="tests/map-interactions.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Map Interactions › should show conflict indicators on map" classname="tests/map-interactions.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Map Interactions › should display moratoriums on map" classname="tests/map-interactions.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Map Interactions › should handle map performance with many projects" classname="tests/map-interactions.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/moratorium-management.spec.ts" timestamp="2025-10-21T09:00:28.242Z" hostname="firefox" tests="7" failures="0" skipped="7" time="0" errors="0">
+<testcase name="Moratorium Management › coordinator can create moratorium" classname="tests/moratorium-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Moratorium Management › moratorium validation rules" classname="tests/moratorium-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Moratorium Management › moratorium warnings during project creation" classname="tests/moratorium-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Moratorium Management › coordinator can approve project despite moratorium" classname="tests/moratorium-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Moratorium Management › moratorium editing and deletion" classname="tests/moratorium-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Moratorium Management › moratorium expiration handling" classname="tests/moratorium-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Moratorium Management › moratorium map visualization" classname="tests/moratorium-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/performance.spec.ts" timestamp="2025-10-21T09:00:28.242Z" hostname="firefox" tests="8" failures="0" skipped="8" time="0" errors="0">
+<testcase name="Performance Tests › page load performance" classname="tests/performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › API response times" classname="tests/performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › map rendering performance with many projects" classname="tests/performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › form submission performance" classname="tests/performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › conflict detection performance" classname="tests/performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › large dataset handling" classname="tests/performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › memory usage monitoring" classname="tests/performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › network efficiency" classname="tests/performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/project-workflow.spec.ts" timestamp="2025-10-21T09:00:28.242Z" hostname="firefox" tests="5" failures="0" skipped="5" time="0" errors="0">
+<testcase name="Project Workflow › complete project lifecycle - applicant creates, coordinator approves" classname="tests/project-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Project Workflow › project rejection workflow" classname="tests/project-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Project Workflow › project with conflicts workflow" classname="tests/project-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Project Workflow › project comments and communication" classname="tests/project-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Project Workflow › project editing and updates" classname="tests/project-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/user-management.spec.ts" timestamp="2025-10-21T09:00:28.242Z" hostname="firefox" tests="10" failures="0" skipped="10" time="0" errors="0">
+<testcase name="User Management › regional admin can manage users" classname="tests/user-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="User Management › regional admin can create new coordinator" classname="tests/user-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="User Management › regional admin can assign territories to coordinator" classname="tests/user-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="User Management › coordinator cannot access admin functions" classname="tests/user-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="User Management › applicant cannot access coordinator functions" classname="tests/user-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="User Management › user registration workflow" classname="tests/user-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="User Management › user profile management" classname="tests/user-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="User Management › password change functionality" classname="tests/user-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="User Management › user deactivation and reactivation" classname="tests/user-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="User Management › territorial access restrictions" classname="tests/user-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/auth.spec.ts" timestamp="2025-10-21T09:00:28.242Z" hostname="webkit" tests="7" failures="0" skipped="7" time="0" errors="0">
+<testcase name="Authentication Flow › should login as regional administrator" classname="tests/auth.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Authentication Flow › should login as municipal coordinator" classname="tests/auth.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Authentication Flow › should login as applicant" classname="tests/auth.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Authentication Flow › should reject invalid credentials" classname="tests/auth.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Authentication Flow › should logout successfully" classname="tests/auth.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Authentication Flow › should redirect unauthenticated users to login" classname="tests/auth.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Authentication Flow › should maintain session after page refresh" classname="tests/auth.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/load-testing.spec.ts" timestamp="2025-10-21T09:00:28.242Z" hostname="webkit" tests="5" failures="0" skipped="5" time="0" errors="0">
+<testcase name="Load Testing › concurrent user sessions" classname="tests/load-testing.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Load Testing › API endpoint stress testing" classname="tests/load-testing.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Load Testing › database performance under concurrent writes" classname="tests/load-testing.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Load Testing › memory usage under extended session" classname="tests/load-testing.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Load Testing › network bandwidth efficiency" classname="tests/load-testing.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/map-interactions.spec.ts" timestamp="2025-10-21T09:00:28.242Z" hostname="webkit" tests="10" failures="0" skipped="10" time="0" errors="0">
+<testcase name="Map Interactions › should load map with all layers" classname="tests/map-interactions.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Map Interactions › should toggle map layers" classname="tests/map-interactions.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Map Interactions › should search for locations using geocoding" classname="tests/map-interactions.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Map Interactions › should draw different geometry types" classname="tests/map-interactions.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Map Interactions › should display project tooltips on hover" classname="tests/map-interactions.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Map Interactions › should open project details on click" classname="tests/map-interactions.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Map Interactions › should filter projects on map" classname="tests/map-interactions.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Map Interactions › should show conflict indicators on map" classname="tests/map-interactions.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Map Interactions › should display moratoriums on map" classname="tests/map-interactions.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Map Interactions › should handle map performance with many projects" classname="tests/map-interactions.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/moratorium-management.spec.ts" timestamp="2025-10-21T09:00:28.242Z" hostname="webkit" tests="7" failures="0" skipped="7" time="0" errors="0">
+<testcase name="Moratorium Management › coordinator can create moratorium" classname="tests/moratorium-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Moratorium Management › moratorium validation rules" classname="tests/moratorium-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Moratorium Management › moratorium warnings during project creation" classname="tests/moratorium-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Moratorium Management › coordinator can approve project despite moratorium" classname="tests/moratorium-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Moratorium Management › moratorium editing and deletion" classname="tests/moratorium-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Moratorium Management › moratorium expiration handling" classname="tests/moratorium-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Moratorium Management › moratorium map visualization" classname="tests/moratorium-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/performance.spec.ts" timestamp="2025-10-21T09:00:28.242Z" hostname="webkit" tests="8" failures="0" skipped="8" time="0" errors="0">
+<testcase name="Performance Tests › page load performance" classname="tests/performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › API response times" classname="tests/performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › map rendering performance with many projects" classname="tests/performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › form submission performance" classname="tests/performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › conflict detection performance" classname="tests/performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › large dataset handling" classname="tests/performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › memory usage monitoring" classname="tests/performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › network efficiency" classname="tests/performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/project-workflow.spec.ts" timestamp="2025-10-21T09:00:28.242Z" hostname="webkit" tests="5" failures="0" skipped="5" time="0" errors="0">
+<testcase name="Project Workflow › complete project lifecycle - applicant creates, coordinator approves" classname="tests/project-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Project Workflow › project rejection workflow" classname="tests/project-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Project Workflow › project with conflicts workflow" classname="tests/project-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Project Workflow › project comments and communication" classname="tests/project-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Project Workflow › project editing and updates" classname="tests/project-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/user-management.spec.ts" timestamp="2025-10-21T09:00:28.242Z" hostname="webkit" tests="10" failures="0" skipped="10" time="0" errors="0">
+<testcase name="User Management › regional admin can manage users" classname="tests/user-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="User Management › regional admin can create new coordinator" classname="tests/user-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="User Management › regional admin can assign territories to coordinator" classname="tests/user-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="User Management › coordinator cannot access admin functions" classname="tests/user-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="User Management › applicant cannot access coordinator functions" classname="tests/user-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="User Management › user registration workflow" classname="tests/user-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="User Management › user profile management" classname="tests/user-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="User Management › password change functionality" classname="tests/user-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="User Management › user deactivation and reactivation" classname="tests/user-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="User Management › territorial access restrictions" classname="tests/user-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/auth.spec.ts" timestamp="2025-10-21T09:00:28.242Z" hostname="Mobile Chrome" tests="7" failures="0" skipped="7" time="0" errors="0">
+<testcase name="Authentication Flow › should login as regional administrator" classname="tests/auth.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Authentication Flow › should login as municipal coordinator" classname="tests/auth.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Authentication Flow › should login as applicant" classname="tests/auth.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Authentication Flow › should reject invalid credentials" classname="tests/auth.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Authentication Flow › should logout successfully" classname="tests/auth.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Authentication Flow › should redirect unauthenticated users to login" classname="tests/auth.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Authentication Flow › should maintain session after page refresh" classname="tests/auth.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/load-testing.spec.ts" timestamp="2025-10-21T09:00:28.242Z" hostname="Mobile Chrome" tests="5" failures="0" skipped="5" time="0" errors="0">
+<testcase name="Load Testing › concurrent user sessions" classname="tests/load-testing.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Load Testing › API endpoint stress testing" classname="tests/load-testing.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Load Testing › database performance under concurrent writes" classname="tests/load-testing.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Load Testing › memory usage under extended session" classname="tests/load-testing.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Load Testing › network bandwidth efficiency" classname="tests/load-testing.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/map-interactions.spec.ts" timestamp="2025-10-21T09:00:28.242Z" hostname="Mobile Chrome" tests="10" failures="0" skipped="10" time="0" errors="0">
+<testcase name="Map Interactions › should load map with all layers" classname="tests/map-interactions.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Map Interactions › should toggle map layers" classname="tests/map-interactions.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Map Interactions › should search for locations using geocoding" classname="tests/map-interactions.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Map Interactions › should draw different geometry types" classname="tests/map-interactions.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Map Interactions › should display project tooltips on hover" classname="tests/map-interactions.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Map Interactions › should open project details on click" classname="tests/map-interactions.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Map Interactions › should filter projects on map" classname="tests/map-interactions.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Map Interactions › should show conflict indicators on map" classname="tests/map-interactions.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Map Interactions › should display moratoriums on map" classname="tests/map-interactions.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Map Interactions › should handle map performance with many projects" classname="tests/map-interactions.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/moratorium-management.spec.ts" timestamp="2025-10-21T09:00:28.242Z" hostname="Mobile Chrome" tests="7" failures="0" skipped="7" time="0" errors="0">
+<testcase name="Moratorium Management › coordinator can create moratorium" classname="tests/moratorium-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Moratorium Management › moratorium validation rules" classname="tests/moratorium-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Moratorium Management › moratorium warnings during project creation" classname="tests/moratorium-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Moratorium Management › coordinator can approve project despite moratorium" classname="tests/moratorium-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Moratorium Management › moratorium editing and deletion" classname="tests/moratorium-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Moratorium Management › moratorium expiration handling" classname="tests/moratorium-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Moratorium Management › moratorium map visualization" classname="tests/moratorium-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/performance.spec.ts" timestamp="2025-10-21T09:00:28.242Z" hostname="Mobile Chrome" tests="8" failures="0" skipped="8" time="0" errors="0">
+<testcase name="Performance Tests › page load performance" classname="tests/performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › API response times" classname="tests/performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › map rendering performance with many projects" classname="tests/performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › form submission performance" classname="tests/performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › conflict detection performance" classname="tests/performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › large dataset handling" classname="tests/performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › memory usage monitoring" classname="tests/performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › network efficiency" classname="tests/performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/project-workflow.spec.ts" timestamp="2025-10-21T09:00:28.242Z" hostname="Mobile Chrome" tests="5" failures="0" skipped="5" time="0" errors="0">
+<testcase name="Project Workflow › complete project lifecycle - applicant creates, coordinator approves" classname="tests/project-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Project Workflow › project rejection workflow" classname="tests/project-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Project Workflow › project with conflicts workflow" classname="tests/project-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Project Workflow › project comments and communication" classname="tests/project-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Project Workflow › project editing and updates" classname="tests/project-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/user-management.spec.ts" timestamp="2025-10-21T09:00:28.242Z" hostname="Mobile Chrome" tests="10" failures="0" skipped="10" time="0" errors="0">
+<testcase name="User Management › regional admin can manage users" classname="tests/user-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="User Management › regional admin can create new coordinator" classname="tests/user-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="User Management › regional admin can assign territories to coordinator" classname="tests/user-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="User Management › coordinator cannot access admin functions" classname="tests/user-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="User Management › applicant cannot access coordinator functions" classname="tests/user-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="User Management › user registration workflow" classname="tests/user-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="User Management › user profile management" classname="tests/user-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="User Management › password change functionality" classname="tests/user-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="User Management › user deactivation and reactivation" classname="tests/user-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="User Management › territorial access restrictions" classname="tests/user-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/auth.spec.ts" timestamp="2025-10-21T09:00:28.242Z" hostname="Mobile Safari" tests="7" failures="0" skipped="7" time="0" errors="0">
+<testcase name="Authentication Flow › should login as regional administrator" classname="tests/auth.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Authentication Flow › should login as municipal coordinator" classname="tests/auth.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Authentication Flow › should login as applicant" classname="tests/auth.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Authentication Flow › should reject invalid credentials" classname="tests/auth.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Authentication Flow › should logout successfully" classname="tests/auth.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Authentication Flow › should redirect unauthenticated users to login" classname="tests/auth.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Authentication Flow › should maintain session after page refresh" classname="tests/auth.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/load-testing.spec.ts" timestamp="2025-10-21T09:00:28.242Z" hostname="Mobile Safari" tests="5" failures="0" skipped="5" time="0" errors="0">
+<testcase name="Load Testing › concurrent user sessions" classname="tests/load-testing.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Load Testing › API endpoint stress testing" classname="tests/load-testing.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Load Testing › database performance under concurrent writes" classname="tests/load-testing.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Load Testing › memory usage under extended session" classname="tests/load-testing.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Load Testing › network bandwidth efficiency" classname="tests/load-testing.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/map-interactions.spec.ts" timestamp="2025-10-21T09:00:28.242Z" hostname="Mobile Safari" tests="10" failures="0" skipped="10" time="0" errors="0">
+<testcase name="Map Interactions › should load map with all layers" classname="tests/map-interactions.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Map Interactions › should toggle map layers" classname="tests/map-interactions.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Map Interactions › should search for locations using geocoding" classname="tests/map-interactions.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Map Interactions › should draw different geometry types" classname="tests/map-interactions.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Map Interactions › should display project tooltips on hover" classname="tests/map-interactions.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Map Interactions › should open project details on click" classname="tests/map-interactions.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Map Interactions › should filter projects on map" classname="tests/map-interactions.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Map Interactions › should show conflict indicators on map" classname="tests/map-interactions.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Map Interactions › should display moratoriums on map" classname="tests/map-interactions.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Map Interactions › should handle map performance with many projects" classname="tests/map-interactions.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/moratorium-management.spec.ts" timestamp="2025-10-21T09:00:28.242Z" hostname="Mobile Safari" tests="7" failures="0" skipped="7" time="0" errors="0">
+<testcase name="Moratorium Management › coordinator can create moratorium" classname="tests/moratorium-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Moratorium Management › moratorium validation rules" classname="tests/moratorium-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Moratorium Management › moratorium warnings during project creation" classname="tests/moratorium-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Moratorium Management › coordinator can approve project despite moratorium" classname="tests/moratorium-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Moratorium Management › moratorium editing and deletion" classname="tests/moratorium-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Moratorium Management › moratorium expiration handling" classname="tests/moratorium-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Moratorium Management › moratorium map visualization" classname="tests/moratorium-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/performance.spec.ts" timestamp="2025-10-21T09:00:28.242Z" hostname="Mobile Safari" tests="8" failures="0" skipped="8" time="0" errors="0">
+<testcase name="Performance Tests › page load performance" classname="tests/performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › API response times" classname="tests/performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › map rendering performance with many projects" classname="tests/performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › form submission performance" classname="tests/performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › conflict detection performance" classname="tests/performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › large dataset handling" classname="tests/performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › memory usage monitoring" classname="tests/performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › network efficiency" classname="tests/performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/project-workflow.spec.ts" timestamp="2025-10-21T09:00:28.242Z" hostname="Mobile Safari" tests="5" failures="0" skipped="5" time="0" errors="0">
+<testcase name="Project Workflow › complete project lifecycle - applicant creates, coordinator approves" classname="tests/project-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Project Workflow › project rejection workflow" classname="tests/project-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Project Workflow › project with conflicts workflow" classname="tests/project-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Project Workflow › project comments and communication" classname="tests/project-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Project Workflow › project editing and updates" classname="tests/project-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/user-management.spec.ts" timestamp="2025-10-21T09:00:28.242Z" hostname="Mobile Safari" tests="10" failures="0" skipped="10" time="0" errors="0">
+<testcase name="User Management › regional admin can manage users" classname="tests/user-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="User Management › regional admin can create new coordinator" classname="tests/user-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="User Management › regional admin can assign territories to coordinator" classname="tests/user-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="User Management › coordinator cannot access admin functions" classname="tests/user-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="User Management › applicant cannot access coordinator functions" classname="tests/user-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="User Management › user registration workflow" classname="tests/user-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="User Management › user profile management" classname="tests/user-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="User Management › password change functionality" classname="tests/user-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="User Management › user deactivation and reactivation" classname="tests/user-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="User Management › territorial access restrictions" classname="tests/user-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/auth.spec.ts" timestamp="2025-10-21T09:00:28.242Z" hostname="Microsoft Edge" tests="7" failures="0" skipped="7" time="0" errors="0">
+<testcase name="Authentication Flow › should login as regional administrator" classname="tests/auth.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Authentication Flow › should login as municipal coordinator" classname="tests/auth.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Authentication Flow › should login as applicant" classname="tests/auth.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Authentication Flow › should reject invalid credentials" classname="tests/auth.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Authentication Flow › should logout successfully" classname="tests/auth.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Authentication Flow › should redirect unauthenticated users to login" classname="tests/auth.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Authentication Flow › should maintain session after page refresh" classname="tests/auth.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/load-testing.spec.ts" timestamp="2025-10-21T09:00:28.242Z" hostname="Microsoft Edge" tests="5" failures="0" skipped="5" time="0" errors="0">
+<testcase name="Load Testing › concurrent user sessions" classname="tests/load-testing.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Load Testing › API endpoint stress testing" classname="tests/load-testing.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Load Testing › database performance under concurrent writes" classname="tests/load-testing.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Load Testing › memory usage under extended session" classname="tests/load-testing.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Load Testing › network bandwidth efficiency" classname="tests/load-testing.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/map-interactions.spec.ts" timestamp="2025-10-21T09:00:28.242Z" hostname="Microsoft Edge" tests="10" failures="0" skipped="10" time="0" errors="0">
+<testcase name="Map Interactions › should load map with all layers" classname="tests/map-interactions.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Map Interactions › should toggle map layers" classname="tests/map-interactions.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Map Interactions › should search for locations using geocoding" classname="tests/map-interactions.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Map Interactions › should draw different geometry types" classname="tests/map-interactions.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Map Interactions › should display project tooltips on hover" classname="tests/map-interactions.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Map Interactions › should open project details on click" classname="tests/map-interactions.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Map Interactions › should filter projects on map" classname="tests/map-interactions.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Map Interactions › should show conflict indicators on map" classname="tests/map-interactions.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Map Interactions › should display moratoriums on map" classname="tests/map-interactions.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Map Interactions › should handle map performance with many projects" classname="tests/map-interactions.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/moratorium-management.spec.ts" timestamp="2025-10-21T09:00:28.242Z" hostname="Microsoft Edge" tests="7" failures="0" skipped="7" time="0" errors="0">
+<testcase name="Moratorium Management › coordinator can create moratorium" classname="tests/moratorium-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Moratorium Management › moratorium validation rules" classname="tests/moratorium-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Moratorium Management › moratorium warnings during project creation" classname="tests/moratorium-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Moratorium Management › coordinator can approve project despite moratorium" classname="tests/moratorium-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Moratorium Management › moratorium editing and deletion" classname="tests/moratorium-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Moratorium Management › moratorium expiration handling" classname="tests/moratorium-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Moratorium Management › moratorium map visualization" classname="tests/moratorium-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/performance.spec.ts" timestamp="2025-10-21T09:00:28.242Z" hostname="Microsoft Edge" tests="8" failures="0" skipped="8" time="0" errors="0">
+<testcase name="Performance Tests › page load performance" classname="tests/performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › API response times" classname="tests/performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › map rendering performance with many projects" classname="tests/performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › form submission performance" classname="tests/performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › conflict detection performance" classname="tests/performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › large dataset handling" classname="tests/performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › memory usage monitoring" classname="tests/performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › network efficiency" classname="tests/performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/project-workflow.spec.ts" timestamp="2025-10-21T09:00:28.242Z" hostname="Microsoft Edge" tests="5" failures="0" skipped="5" time="0" errors="0">
+<testcase name="Project Workflow › complete project lifecycle - applicant creates, coordinator approves" classname="tests/project-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Project Workflow › project rejection workflow" classname="tests/project-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Project Workflow › project with conflicts workflow" classname="tests/project-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Project Workflow › project comments and communication" classname="tests/project-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Project Workflow › project editing and updates" classname="tests/project-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/user-management.spec.ts" timestamp="2025-10-21T09:00:28.242Z" hostname="Microsoft Edge" tests="10" failures="0" skipped="10" time="0" errors="0">
+<testcase name="User Management › regional admin can manage users" classname="tests/user-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="User Management › regional admin can create new coordinator" classname="tests/user-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="User Management › regional admin can assign territories to coordinator" classname="tests/user-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="User Management › coordinator cannot access admin functions" classname="tests/user-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="User Management › applicant cannot access coordinator functions" classname="tests/user-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="User Management › user registration workflow" classname="tests/user-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="User Management › user profile management" classname="tests/user-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="User Management › password change functionality" classname="tests/user-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="User Management › user deactivation and reactivation" classname="tests/user-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="User Management › territorial access restrictions" classname="tests/user-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/auth.spec.ts" timestamp="2025-10-21T09:00:28.242Z" hostname="Google Chrome" tests="7" failures="0" skipped="7" time="0" errors="0">
+<testcase name="Authentication Flow › should login as regional administrator" classname="tests/auth.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Authentication Flow › should login as municipal coordinator" classname="tests/auth.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Authentication Flow › should login as applicant" classname="tests/auth.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Authentication Flow › should reject invalid credentials" classname="tests/auth.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Authentication Flow › should logout successfully" classname="tests/auth.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Authentication Flow › should redirect unauthenticated users to login" classname="tests/auth.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Authentication Flow › should maintain session after page refresh" classname="tests/auth.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/load-testing.spec.ts" timestamp="2025-10-21T09:00:28.242Z" hostname="Google Chrome" tests="5" failures="0" skipped="5" time="0" errors="0">
+<testcase name="Load Testing › concurrent user sessions" classname="tests/load-testing.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Load Testing › API endpoint stress testing" classname="tests/load-testing.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Load Testing › database performance under concurrent writes" classname="tests/load-testing.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Load Testing › memory usage under extended session" classname="tests/load-testing.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Load Testing › network bandwidth efficiency" classname="tests/load-testing.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/map-interactions.spec.ts" timestamp="2025-10-21T09:00:28.242Z" hostname="Google Chrome" tests="10" failures="0" skipped="10" time="0" errors="0">
+<testcase name="Map Interactions › should load map with all layers" classname="tests/map-interactions.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Map Interactions › should toggle map layers" classname="tests/map-interactions.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Map Interactions › should search for locations using geocoding" classname="tests/map-interactions.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Map Interactions › should draw different geometry types" classname="tests/map-interactions.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Map Interactions › should display project tooltips on hover" classname="tests/map-interactions.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Map Interactions › should open project details on click" classname="tests/map-interactions.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Map Interactions › should filter projects on map" classname="tests/map-interactions.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Map Interactions › should show conflict indicators on map" classname="tests/map-interactions.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Map Interactions › should display moratoriums on map" classname="tests/map-interactions.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Map Interactions › should handle map performance with many projects" classname="tests/map-interactions.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/moratorium-management.spec.ts" timestamp="2025-10-21T09:00:28.242Z" hostname="Google Chrome" tests="7" failures="0" skipped="7" time="0" errors="0">
+<testcase name="Moratorium Management › coordinator can create moratorium" classname="tests/moratorium-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Moratorium Management › moratorium validation rules" classname="tests/moratorium-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Moratorium Management › moratorium warnings during project creation" classname="tests/moratorium-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Moratorium Management › coordinator can approve project despite moratorium" classname="tests/moratorium-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Moratorium Management › moratorium editing and deletion" classname="tests/moratorium-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Moratorium Management › moratorium expiration handling" classname="tests/moratorium-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Moratorium Management › moratorium map visualization" classname="tests/moratorium-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/performance.spec.ts" timestamp="2025-10-21T09:00:28.242Z" hostname="Google Chrome" tests="8" failures="0" skipped="8" time="0" errors="0">
+<testcase name="Performance Tests › page load performance" classname="tests/performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › API response times" classname="tests/performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › map rendering performance with many projects" classname="tests/performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › form submission performance" classname="tests/performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › conflict detection performance" classname="tests/performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › large dataset handling" classname="tests/performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › memory usage monitoring" classname="tests/performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Performance Tests › network efficiency" classname="tests/performance.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/project-workflow.spec.ts" timestamp="2025-10-21T09:00:28.242Z" hostname="Google Chrome" tests="5" failures="0" skipped="5" time="0" errors="0">
+<testcase name="Project Workflow › complete project lifecycle - applicant creates, coordinator approves" classname="tests/project-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Project Workflow › project rejection workflow" classname="tests/project-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Project Workflow › project with conflicts workflow" classname="tests/project-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Project Workflow › project comments and communication" classname="tests/project-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Project Workflow › project editing and updates" classname="tests/project-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/user-management.spec.ts" timestamp="2025-10-21T09:00:28.242Z" hostname="Google Chrome" tests="10" failures="0" skipped="10" time="0" errors="0">
+<testcase name="User Management › regional admin can manage users" classname="tests/user-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="User Management › regional admin can create new coordinator" classname="tests/user-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="User Management › regional admin can assign territories to coordinator" classname="tests/user-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="User Management › coordinator cannot access admin functions" classname="tests/user-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="User Management › applicant cannot access coordinator functions" classname="tests/user-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="User Management › user registration workflow" classname="tests/user-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="User Management › user profile management" classname="tests/user-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="User Management › password change functionality" classname="tests/user-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="User Management › user deactivation and reactivation" classname="tests/user-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="User Management › territorial access restrictions" classname="tests/user-management.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+</testsuites>

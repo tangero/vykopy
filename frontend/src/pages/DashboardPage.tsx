@@ -1,5 +1,8 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { useOutletContext } from 'react-router-dom';
+import type { RootState } from '../store';
+import CoordinatorDashboard from '../components/CoordinatorDashboard';
 import ProjectDetail from '../components/ProjectDetail';
 
 interface LayoutContext {
@@ -8,6 +11,7 @@ interface LayoutContext {
 }
 
 const DashboardPage: React.FC = () => {
+  const { user } = useSelector((state: RootState) => state.auth);
   const { openSidebar } = useOutletContext<LayoutContext>();
 
   // Sample project data for demonstration
@@ -28,17 +32,30 @@ const DashboardPage: React.FC = () => {
     openSidebar(<ProjectDetail projectId={sampleProject.id} />);
   };
 
+  // Show coordinator dashboard for coordinators and regional admins
+  if (user?.role === 'municipal_coordinator' || user?.role === 'regional_admin') {
+    return <CoordinatorDashboard />;
+  }
+
+  // Default dashboard for applicants and other users
   return (
     <div className="dashboard-page">
       <h1>DigiKop Dashboard</h1>
       <p>Vítejte v systému pro koordinaci výkopových prací ve Středočeském kraji.</p>
       
       <div className="dashboard-demo">
-        <h2>Demo funkcionalita</h2>
-        <p>Klikněte na tlačítko níže pro zobrazení detailu projektu v postranním panelu:</p>
-        <button onClick={handleShowProjectDetail}>
-          Zobrazit detail projektu
-        </button>
+        <h2>Rychlé akce</h2>
+        <div className="quick-actions">
+          <button className="action-button" onClick={() => window.location.href = '/projects'}>
+            📋 Moje projekty
+          </button>
+          <button className="action-button" onClick={() => window.location.href = '/create-project'}>
+            ➕ Nový projekt
+          </button>
+          <button onClick={handleShowProjectDetail}>
+            👁️ Zobrazit demo projekt
+          </button>
+        </div>
       </div>
     </div>
   );

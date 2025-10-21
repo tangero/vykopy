@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import type { RootState, AppDispatch } from '../../store';
 import { registerUser } from '../../store/thunks/authThunks';
 import { clearError, clearRegistrationSuccess } from '../../store/slices/authSlice';
+import { GovButton, GovInput, GovCard, Alert, Icon } from '../gov';
 import './auth.css';
 
 interface FormData {
@@ -158,144 +159,130 @@ const RegisterForm: React.FC = () => {
 
   if (registrationSuccess) {
     return (
-      <div className="register-form-container">
-        <div className="register-form-card">
-          <div className="success-message">
-            <h2>Registrace byla úspěšná!</h2>
-            <p>
-              Váš účet byl vytvořen a čeká na schválení administrátorem.
-              Budete přesměrováni na přihlašovací stránku.
-            </p>
-            <div className="success-icon">✓</div>
-          </div>
-        </div>
+      <div className="gov-auth-container">
+        <GovCard className="gov-auth-card">
+          <Alert color="success" className="gov-auth-success">
+            <Icon name="check-circle" />
+            <div>
+              <h2>Registrace byla úspěšná!</h2>
+              <p>
+                Váš účet byl vytvořen a čeká na schválení administrátorem.
+                Budete přesměrováni na přihlašovací stránku.
+              </p>
+            </div>
+          </Alert>
+        </GovCard>
       </div>
     );
   }
 
   return (
-    <div className="register-form-container">
-      <div className="register-form-card">
-        <div className="register-header">
-          <h1>Registrace do DigiKop</h1>
-          <p>Vytvořte si účet pro koordinaci výkopových prací</p>
-        </div>
+    <div className="gov-auth-container">
+      <GovCard 
+        className="gov-auth-card"
+        title="Registrace do DigiKop"
+        subtitle="Vytvořte si účet pro koordinaci výkopových prací"
+      >
+        <form onSubmit={handleSubmit} className="gov-form">
+          <GovInput
+            label="Jméno a příjmení"
+            type="text"
+            value={formData.name}
+            onChange={(e) => handleInputChange({ target: { name: 'name', value: e.target.value } } as React.ChangeEvent<HTMLInputElement>)}
+            onBlur={(e) => handleBlur({ target: { name: 'name', value: e.target.value } } as React.FocusEvent<HTMLInputElement>)}
+            placeholder="Jan Novák"
+            disabled={isLoading}
+            error={formErrors.name && touched.name ? formErrors.name : undefined}
+            required
+            fullWidth
+            data-testid="name-input"
+          />
 
-        <form onSubmit={handleSubmit} className="register-form">
-          <div className="form-group">
-            <label htmlFor="name">Jméno a příjmení *</label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              value={formData.name}
-              onChange={handleInputChange}
-              onBlur={handleBlur}
-              className={`form-input ${formErrors.name && touched.name ? 'error' : ''}`}
-              placeholder="Jan Novák"
-              disabled={isLoading}
-            />
-            {formErrors.name && touched.name && (
-              <span className="error-message">{formErrors.name}</span>
-            )}
-          </div>
+          <GovInput
+            label="Email"
+            type="email"
+            value={formData.email}
+            onChange={(e) => handleInputChange({ target: { name: 'email', value: e.target.value } } as React.ChangeEvent<HTMLInputElement>)}
+            onBlur={(e) => handleBlur({ target: { name: 'email', value: e.target.value } } as React.FocusEvent<HTMLInputElement>)}
+            placeholder="jan.novak@example.com"
+            disabled={isLoading}
+            error={formErrors.email && touched.email ? formErrors.email : undefined}
+            required
+            fullWidth
+            data-testid="email-input"
+          />
 
-          <div className="form-group">
-            <label htmlFor="email">Email *</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={formData.email}
-              onChange={handleInputChange}
-              onBlur={handleBlur}
-              className={`form-input ${formErrors.email && touched.email ? 'error' : ''}`}
-              placeholder="jan.novak@example.com"
-              disabled={isLoading}
-            />
-            {formErrors.email && touched.email && (
-              <span className="error-message">{formErrors.email}</span>
-            )}
-          </div>
+          <GovInput
+            label="Organizace"
+            type="text"
+            value={formData.organization}
+            onChange={(e) => handleInputChange({ target: { name: 'organization', value: e.target.value } } as React.ChangeEvent<HTMLInputElement>)}
+            onBlur={(e) => handleBlur({ target: { name: 'organization', value: e.target.value } } as React.FocusEvent<HTMLInputElement>)}
+            placeholder="Název vaší organizace"
+            disabled={isLoading}
+            error={formErrors.organization && touched.organization ? formErrors.organization : undefined}
+            required
+            fullWidth
+            data-testid="organization-input"
+          />
 
-          <div className="form-group">
-            <label htmlFor="organization">Organizace *</label>
-            <input
-              type="text"
-              id="organization"
-              name="organization"
-              value={formData.organization}
-              onChange={handleInputChange}
-              onBlur={handleBlur}
-              className={`form-input ${formErrors.organization && touched.organization ? 'error' : ''}`}
-              placeholder="Název vaší organizace"
-              disabled={isLoading}
-            />
-            {formErrors.organization && touched.organization && (
-              <span className="error-message">{formErrors.organization}</span>
-            )}
-          </div>
+          <GovInput
+            label="Heslo"
+            type="password"
+            value={formData.password}
+            onChange={(e) => handleInputChange({ target: { name: 'password', value: e.target.value } } as React.ChangeEvent<HTMLInputElement>)}
+            onBlur={(e) => handleBlur({ target: { name: 'password', value: e.target.value } } as React.FocusEvent<HTMLInputElement>)}
+            placeholder="Alespoň 8 znaků"
+            disabled={isLoading}
+            error={formErrors.password && touched.password ? formErrors.password : undefined}
+            helperText="Heslo musí obsahovat malé písmeno, velké písmeno a číslici"
+            required
+            fullWidth
+            data-testid="password-input"
+          />
 
-          <div className="form-group">
-            <label htmlFor="password">Heslo *</label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              value={formData.password}
-              onChange={handleInputChange}
-              onBlur={handleBlur}
-              className={`form-input ${formErrors.password && touched.password ? 'error' : ''}`}
-              placeholder="Alespoň 8 znaků"
-              disabled={isLoading}
-            />
-            {formErrors.password && touched.password && (
-              <span className="error-message">{formErrors.password}</span>
-            )}
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="confirmPassword">Potvrzení hesla *</label>
-            <input
-              type="password"
-              id="confirmPassword"
-              name="confirmPassword"
-              value={formData.confirmPassword}
-              onChange={handleInputChange}
-              onBlur={handleBlur}
-              className={`form-input ${formErrors.confirmPassword && touched.confirmPassword ? 'error' : ''}`}
-              placeholder="Zadejte heslo znovu"
-              disabled={isLoading}
-            />
-            {formErrors.confirmPassword && touched.confirmPassword && (
-              <span className="error-message">{formErrors.confirmPassword}</span>
-            )}
-          </div>
+          <GovInput
+            label="Potvrzení hesla"
+            type="password"
+            value={formData.confirmPassword}
+            onChange={(e) => handleInputChange({ target: { name: 'confirmPassword', value: e.target.value } } as React.ChangeEvent<HTMLInputElement>)}
+            onBlur={(e) => handleBlur({ target: { name: 'confirmPassword', value: e.target.value } } as React.FocusEvent<HTMLInputElement>)}
+            placeholder="Zadejte heslo znovu"
+            disabled={isLoading}
+            error={formErrors.confirmPassword && touched.confirmPassword ? formErrors.confirmPassword : undefined}
+            required
+            fullWidth
+            data-testid="confirm-password-input"
+          />
 
           {error && (
-            <div className="error-banner">
+            <Alert color="error" className="gov-auth-error">
               {error}
-            </div>
+            </Alert>
           )}
 
-          <button
+          <GovButton
             type="submit"
-            className="register-button"
+            variant="primary"
+            size="large"
             disabled={isLoading}
+            loading={isLoading}
+            fullWidth
+            data-testid="register-button"
           >
             {isLoading ? 'Registruji...' : 'Zaregistrovat se'}
-          </button>
+          </GovButton>
         </form>
 
-        <div className="register-footer">
+        <div className="gov-auth-footer">
           <p>
             Již máte účet?{' '}
-            <Link to="/login" className="login-link">
+            <Link to="/login" className="gov-link">
               Přihlaste se
             </Link>
           </p>
         </div>
-      </div>
+      </GovCard>
     </div>
   );
 };

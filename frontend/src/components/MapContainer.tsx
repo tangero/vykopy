@@ -22,6 +22,7 @@ interface MapContainerProps {
   showDrawingTools?: boolean;
   showFilters?: boolean;
   showSearch?: boolean;
+  enableDrawingMode?: boolean;
   className?: string;
 }
 
@@ -31,11 +32,12 @@ const MapContainer: React.FC<MapContainerProps> = ({
   showDrawingTools = false,
   showFilters = true,
   showSearch = true,
+  enableDrawingMode = false,
   className = '' 
 }) => {
   const [map, setMap] = useState<MapboxMap | null>(null);
   const [layerControlVisible, setLayerControlVisible] = useState(false);
-  const [drawingToolsVisible, setDrawingToolsVisible] = useState(showDrawingTools);
+  const [drawingToolsVisible, setDrawingToolsVisible] = useState(showDrawingTools || enableDrawingMode);
   const [drawingMode, setDrawingMode] = useState<DrawingMode>('none');
   
   // Filter state

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import Navigation from './Navigation';
 import Sidebar from './Sidebar';
+import { Container } from './gov';
 
 const Layout: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -18,12 +19,14 @@ const Layout: React.FC = () => {
   };
 
   return (
-    <div className="app-layout">
+    <div className="gov-layout">
       <Navigation />
-      <div className="app-content">
-        <main className="app-main">
-          <Outlet context={{ openSidebar, closeSidebar }} />
-        </main>
+      <div className="gov-layout__content">
+        <Container>
+          <main className="gov-layout__main">
+            <Outlet context={{ openSidebar, closeSidebar }} />
+          </main>
+        </Container>
         <Sidebar 
           isOpen={sidebarOpen} 
           onClose={closeSidebar}

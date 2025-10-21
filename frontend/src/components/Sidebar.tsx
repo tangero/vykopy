@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { GovButton, Icon } from './gov';
 
 interface SidebarProps {
   isOpen: boolean;
@@ -37,32 +38,26 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, content }) => {
       {/* Overlay */}
       {isOpen && (
         <div 
-          className="sidebar-overlay"
+          className="gov-overlay"
           onClick={onClose}
         />
       )}
 
       {/* Sidebar */}
-      <div className={`sidebar ${isOpen ? 'open' : ''}`}>
-        <div className="sidebar-header">
-          <button 
-            className="sidebar-close"
+      <div className={`gov-sidebar ${isOpen ? 'gov-sidebar--open' : ''}`}>
+        <div className="gov-sidebar__header">
+          <GovButton
+            variant="secondary"
+            size="small"
+            className="gov-sidebar__close"
             onClick={onClose}
             aria-label="Close sidebar"
           >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <path 
-                d="M18 6L6 18M6 6l12 12" 
-                stroke="currentColor" 
-                strokeWidth="2" 
-                strokeLinecap="round" 
-                strokeLinejoin="round"
-              />
-            </svg>
-          </button>
+            <Icon name="close" />
+          </GovButton>
         </div>
         
-        <div className="sidebar-content">
+        <div className="gov-sidebar__content">
           {content}
         </div>
       </div>

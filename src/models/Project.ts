@@ -1,9 +1,14 @@
 import { Pool } from 'pg';
 import { Project, ProjectState, CreateProjectRequest, UpdateProjectRequest, ConflictDetectionResult } from '../types';
 import { createProjectSchema, updateProjectSchema } from '../validation/schemas';
+import { AuditService } from '../services/AuditService';
 
 export class ProjectModel {
-  constructor(private db: Pool) {}
+  private auditService: AuditService;
+
+  constructor(private db: Pool) {
+    this.auditService = new AuditService(db);
+  }
 
   // Valid state transitions for workflow management
   private static readonly STATE_TRANSITIONS: Record<ProjectState, ProjectState[]> = {
@@ -34,7 +39,7 @@ export class ProjectModel {
   /**
    * Creates a new project
    */
-  async create(data: CreateProjectRequest, applicantId: string): Promise<Project> {
+  async create(data: CreateProjectRequest, applicantId: string, ipAddress?: string): Promise<Project> {
     // Validate input data
     const validatedData = createProjectSchema.parse(data);
 
@@ -64,7 +69,29 @@ export class ProjectModel {
     ];
 
     const result = await this.db.query(query, values);
-    return this.mapRowToProject(result.rows[0]);
+    const project = this.mapRowToProject(result.rows[0]);
+
+    // Log project creation
+    await this.auditService.logProjectCreation(
+      project.id,
+      {
+        name: project.name,
+        applicantId: project.applicantId,
+        contractorOrganization: project.contractorOrganization,
+        contractorContact: project.contractorContact,
+        state: project.state,
+        startDate: project.startDate,
+        endDate: project.endDate,
+        geometry: project.geometry,
+        workType: project.workType,
+        workCategory: project.workCategory,
+        description: project.description
+      },
+      applicantId,
+      ipAddress
+    );
+
+    return project;
   }
 
   /**
@@ -88,7 +115,7 @@ export class ProjectModel {
   /**
    * Updates a project
    */
-  async update(id: string, data: UpdateProjectRequest): Promise<Project | null> {
+  async update(id: string, data: UpdateProjectRequest, userId?: string, ipAddress?: string): Promise<Project | null> {
     const validatedData = updateProjectSchema.parse(data);
     
     // If state is being changed, validate the transition
@@ -162,9 +189,9 @@ export class ProjectModel {
     }
 
     // Log the state change in audit trail
-    await this.logStateChange(id, currentProject.state, newState, userId);
+    await this.auditService.logProjectStateChange(id, currentProject.state, newState, userId);
 
-    return this.update(id, { state: newState });
+    return this.update(id, { state: newState }, userId);
   }
 
   /**
@@ -262,7 +289,7 @@ export class ProjectModel {
   /**
    * Deletes a project (soft delete by changing state to cancelled)
    */
-  async delete(id: string, userId: string): Promise<boolean> {
+  async delete(id: string, userId: string, ipAddress?: string): Promise<boolean> {
     const project = await this.findById(id);
     if (!project) {
       return false;
@@ -270,6 +297,26 @@ export class ProjectModel {
 
     // Only allow deletion of draft projects or change to cancelled for others
     if (project.state === 'draft') {
+      // Log deletion before actually deleting
+      await this.auditService.logProjectDeletion(
+        id,
+        {
+          name: project.name,
+          applicantId: project.applicantId,
+          contractorOrganization: project.contractorOrganization,
+          contractorContact: project.contractorContact,
+          state: project.state,
+          startDate: project.startDate,
+          endDate: project.endDate,
+          geometry: project.geometry,
+          workType: project.workType,
+          workCategory: project.workCategory,
+          description: project.description
+        },
+        userId,
+        ipAddress
+      );
+
       const query = 'DELETE FROM projects WHERE id = $1';
       await this.db.query(query, [id]);
     } else {
@@ -352,42 +399,25 @@ export class ProjectModel {
     return result.rows.map(row => this.mapRowToProject(row));
   }
 
-  /**
-   * Logs state change in audit trail
-   */
-  private async logStateChange(projectId: string, oldState: ProjectState, newState: ProjectState, userId: string): Promise<void> {
-    const query = `
-      INSERT INTO audit_logs (entity_type, entity_id, action, user_id, old_values, new_values)
-      VALUES ('project', $1, 'state_change', $2, $3, $4)
-    `;
 
-    const oldValues = { state: oldState };
-    const newValues = { state: newState };
-
-    await this.db.query(query, [
-      projectId,
-      userId,
-      JSON.stringify(oldValues),
-      JSON.stringify(newValues)
-    ]);
-  }
 
   /**
    * Add a comment to a project
    */
-  async addComment(projectId: string, userId: string, content: string): Promise<any> {
+  async addComment(projectId: string, userId: string, content: string, attachmentUrl?: string): Promise<any> {
     const query = `
-      INSERT INTO project_comments (project_id, user_id, content)
-      VALUES ($1, $2, $3)
-      RETURNING id, project_id, user_id, content, created_at
+      INSERT INTO project_comments (project_id, user_id, content, attachment_url)
+      VALUES ($1, $2, $3, $4)
+      RETURNING id, project_id, user_id, content, attachment_url, created_at
     `;
     
-    const result = await this.db.query(query, [projectId, userId, content]);
+    const result = await this.db.query(query, [projectId, userId, content, attachmentUrl || null]);
     return {
       id: result.rows[0].id,
       projectId: result.rows[0].project_id,
       userId: result.rows[0].user_id,
       content: result.rows[0].content,
+      attachmentUrl: result.rows[0].attachment_url,
       createdAt: new Date(result.rows[0].created_at)
     };
   }
@@ -398,7 +428,7 @@ export class ProjectModel {
   async getComments(projectId: string): Promise<any[]> {
     const query = `
       SELECT 
-        pc.id, pc.project_id, pc.user_id, pc.content, pc.created_at,
+        pc.id, pc.project_id, pc.user_id, pc.content, pc.attachment_url, pc.created_at,
         u.name as user_name, u.role as user_role
       FROM project_comments pc
       JOIN users u ON pc.user_id = u.id
@@ -412,6 +442,7 @@ export class ProjectModel {
       projectId: row.project_id,
       userId: row.user_id,
       content: row.content,
+      attachmentUrl: row.attachment_url,
       createdAt: new Date(row.created_at),
       userName: row.user_name,
       userRole: row.user_role

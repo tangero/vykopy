@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../hooks/redux';
 import { logoutUser } from '../store/thunks/authThunks';
+import { GovButton, Container, Icon } from '../components/gov';
 
 const Navigation: React.FC = () => {
   const [userMenuOpen, setUserMenuOpen] = useState(false);
@@ -43,116 +44,112 @@ const Navigation: React.FC = () => {
   };
 
   return (
-    <nav className="navigation">
-      <div className="nav-container">
-        {/* Logo and brand */}
-        <div className="nav-brand">
-          <Link to="/dashboard" className="nav-logo">
-            <h1>DigiKop</h1>
-          </Link>
-        </div>
+    <nav className="gov-header">
+      <Container>
+        <div className="gov-header__content">
+          {/* Logo and brand */}
+          <div className="gov-header__brand">
+            <Link to="/dashboard" className="gov-header__logo">
+              <h1 className="gov-header__title">DigiKop</h1>
+            </Link>
+          </div>
 
-        {/* Mobile menu button */}
-        <button 
-          className="mobile-menu-button"
-          onClick={toggleMobileMenu}
-          aria-label="Toggle mobile menu"
-        >
-          <span className={`hamburger ${mobileMenuOpen ? 'open' : ''}`}>
-            <span></span>
-            <span></span>
-            <span></span>
-          </span>
-        </button>
+          {/* Mobile menu button */}
+          <GovButton
+            variant="secondary"
+            size="small"
+            className="gov-header__mobile-toggle"
+            onClick={toggleMobileMenu}
+            aria-label="Toggle mobile menu"
+          >
+            <Icon name={mobileMenuOpen ? 'close' : 'menu'} />
+          </GovButton>
 
-        {/* Navigation links */}
-        <div className={`nav-links ${mobileMenuOpen ? 'mobile-open' : ''}`}>
-          <Link 
-            to="/dashboard" 
-            className={`nav-link ${isActiveRoute('/dashboard') ? 'active' : ''}`}
-            onClick={() => setMobileMenuOpen(false)}
-          >
-            Dashboard
-          </Link>
-          <Link 
-            to="/projects" 
-            className={`nav-link ${isActiveRoute('/projects') ? 'active' : ''}`}
-            onClick={() => setMobileMenuOpen(false)}
-          >
-            Projekty
-          </Link>
-          {user?.role === 'municipal_coordinator' || user?.role === 'regional_admin' ? (
+          {/* Navigation links */}
+          <div className={`gov-header__nav ${mobileMenuOpen ? 'gov-header__nav--open' : ''}`}>
             <Link 
-              to="/moratoriums" 
-              className={`nav-link ${isActiveRoute('/moratoriums') ? 'active' : ''}`}
+              to="/dashboard" 
+              className={`gov-nav-link ${isActiveRoute('/dashboard') ? 'gov-nav-link--active' : ''}`}
               onClick={() => setMobileMenuOpen(false)}
             >
-              Moratoria
+              Dashboard
             </Link>
-          ) : null}
-        </div>
-
-        {/* User menu */}
-        <div className="user-menu">
-          <button 
-            className="user-menu-button"
-            onClick={toggleUserMenu}
-            aria-label="User menu"
-          >
-            <div className="user-avatar">
-              {user?.name?.charAt(0).toUpperCase() || 'U'}
-            </div>
-            <div className="user-info">
-              <span className="user-name">{user?.name}</span>
-              <span className="user-role">{getRoleDisplayName(user?.role || '')}</span>
-            </div>
-            <svg 
-              className={`dropdown-arrow ${userMenuOpen ? 'open' : ''}`}
-              width="12" 
-              height="12" 
-              viewBox="0 0 12 12"
+            <Link 
+              to="/projects" 
+              className={`gov-nav-link ${isActiveRoute('/projects') ? 'gov-nav-link--active' : ''}`}
+              onClick={() => setMobileMenuOpen(false)}
             >
-              <path d="M2 4l4 4 4-4" stroke="currentColor" strokeWidth="2" fill="none"/>
-            </svg>
-          </button>
+              Projekty
+            </Link>
+            {user?.role === 'municipal_coordinator' || user?.role === 'regional_admin' ? (
+              <Link 
+                to="/moratoriums" 
+                className={`gov-nav-link ${isActiveRoute('/moratoriums') ? 'gov-nav-link--active' : ''}`}
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Moratoria
+              </Link>
+            ) : null}
+          </div>
 
-          {userMenuOpen && (
-            <div className="user-dropdown">
-              <div className="user-dropdown-header">
-                <div className="user-details">
-                  <strong>{user?.name}</strong>
-                  <span>{user?.email}</span>
-                  {user?.organization && <span>{user.organization}</span>}
-                </div>
+          {/* User menu */}
+          <div className="gov-header__user">
+            <GovButton
+              variant="secondary"
+              size="small"
+              className="gov-header__user-button"
+              onClick={toggleUserMenu}
+            >
+              <div className="gov-avatar">
+                {user?.name?.charAt(0).toUpperCase() || 'U'}
               </div>
-              <div className="user-dropdown-divider"></div>
-              <button 
-                className="user-dropdown-item"
-                onClick={() => {
-                  setUserMenuOpen(false);
-                  // TODO: Navigate to profile settings
-                }}
-              >
-                Nastavení profilu
-              </button>
-              <button 
-                className="user-dropdown-item logout"
-                onClick={() => {
-                  setUserMenuOpen(false);
-                  handleLogout();
-                }}
-              >
-                Odhlásit se
-              </button>
-            </div>
-          )}
+              <div className="gov-header__user-info">
+                <span className="gov-header__user-name">{user?.name}</span>
+                <span className="gov-header__user-role">{getRoleDisplayName(user?.role || '')}</span>
+              </div>
+              <Icon name={userMenuOpen ? 'chevron-up' : 'chevron-down'} />
+            </GovButton>
+
+            {userMenuOpen && (
+              <div className="gov-dropdown">
+                <div className="gov-dropdown__header">
+                  <div className="gov-dropdown__user-details">
+                    <strong>{user?.name}</strong>
+                    <span>{user?.email}</span>
+                    {user?.organization && <span>{user.organization}</span>}
+                  </div>
+                </div>
+                <div className="gov-dropdown__divider"></div>
+                <button 
+                  className="gov-dropdown__item"
+                  onClick={() => {
+                    setUserMenuOpen(false);
+                    // TODO: Navigate to profile settings
+                  }}
+                >
+                  <Icon name="settings" />
+                  Nastavení profilu
+                </button>
+                <button 
+                  className="gov-dropdown__item gov-dropdown__item--danger"
+                  onClick={() => {
+                    setUserMenuOpen(false);
+                    handleLogout();
+                  }}
+                >
+                  <Icon name="logout" />
+                  Odhlásit se
+                </button>
+              </div>
+            )}
+          </div>
         </div>
-      </div>
+      </Container>
 
       {/* Overlay for mobile menu */}
       {mobileMenuOpen && (
         <div 
-          className="mobile-overlay"
+          className="gov-overlay"
           onClick={() => setMobileMenuOpen(false)}
         />
       )}

@@ -1,0 +1,20 @@
+[phases.setup]
+nixPkgs = ['nodejs-18_x', 'npm-9_x']
+
+[phases.install]
+cmds = [
+  'npm ci --only=production',
+  'cd frontend && npm ci --only=production'
+]
+
+[phases.build]
+cmds = [
+  'npm run build:backend',
+  'npm run build:frontend'
+]
+
+[start]
+cmd = 'npm run start:prod'
+
+[variables]
+NODE_ENV = 'production'

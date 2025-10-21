@@ -12,31 +12,35 @@ import {
   apiRateLimiter,
   corsOptions 
 } from './middleware';
+import { 
+  securityHeaders, 
+  sanitizeInput, 
+  securityLogger,
+  corsOptions as securityCorsOptions 
+} from './middleware/security';
 import routes, { initializeRoutes } from './routes';
 import { pool } from './config/database';
 import { notificationTriggers } from './services/NotificationTriggers';
 import { emailService } from './services/EmailService';
+import { MonitoringService } from './services/MonitoringService';
 
 // Create Express application
 const app = express();
 
-// Security middleware
-app.use(helmet({
-  contentSecurityPolicy: {
-    directives: {
-      defaultSrc: ["'self'"],
-      styleSrc: ["'self'", "'unsafe-inline'", "https://api.mapbox.com"],
-      scriptSrc: ["'self'", "https://api.mapbox.com"],
-      imgSrc: ["'self'", "data:", "https:", "blob:"],
-      connectSrc: ["'self'", "https://api.mapbox.com", "https://*.tiles.mapbox.com"],
-      fontSrc: ["'self'", "https://fonts.gstatic.com"],
-      workerSrc: ["'self'", "blob:"],
-    },
-  },
-}));
+// Initialize monitoring (must be first)
+MonitoringService.initialize(app);
 
-// CORS configuration
-app.use(cors(corsOptions));
+// Enhanced security middleware
+app.use(securityHeaders);
+
+// Security logging
+app.use(securityLogger);
+
+// CORS configuration with enhanced security
+app.use(cors(securityCorsOptions));
+
+// Input sanitization
+app.use(sanitizeInput);
 
 // Compression middleware
 app.use(compression());
@@ -77,6 +81,9 @@ app.use(config.api.prefix, apiRateLimiter, routes);
 
 // 404 handler
 app.use(notFound);
+
+// Sentry error handler (must be before other error handlers)
+MonitoringService.addErrorHandler(app);
 
 // Error handling middleware (must be last)
 app.use(errorHandler);

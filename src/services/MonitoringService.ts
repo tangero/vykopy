@@ -1,0 +1,309 @@
+import * as Sentry from '@sentry/node';
+import * as Tracing from '@sentry/tracing';
+import { Express } from 'express';
+import { config } from '../config';
+
+export class MonitoringService {
+  private static initialized = false;
+
+  /**
+   * Initialize Sentry monitoring
+   */
+  static initialize(app: Express): void {
+    if (this.initialized || !process.env.SENTRY_DSN) {
+      return;
+    }
+
+    Sentry.init({
+      dsn: process.env.SENTRY_DSN,
+      environment: config.nodeEnv,
+      release: process.env.npm_package_version || '1.0.0',
+      
+      // Performance monitoring
+      tracesSampleRate: config.nodeEnv === 'production' ? 0.1 : 1.0,
+      
+      // Error filtering
+      beforeSend(event, hint) {
+        // Filter out non-critical errors in production
+        if (config.nodeEnv === 'production') {
+          const error = hint.originalException;
+          
+          // Skip validation errors
+          if (error instanceof Error && error.message.includes('validation')) {
+            return null;
+          }
+          
+          // Skip rate limit errors
+          if (error instanceof Error && error.message.includes('rate limit')) {
+            return null;
+          }
+        }
+        
+        return event;
+      },
+
+      integrations: [
+        // Express integration
+        new Sentry.Integrations.Http({ tracing: true }),
+        new Tracing.Integrations.Express({ app }),
+        
+        // Database integration
+        new Tracing.Integrations.Postgres(),
+        
+        // Node.js integrations
+        new Sentry.Integrations.OnUncaughtException({
+          exitEvenIfOtherHandlersAreRegistered: false,
+        }),
+        new Sentry.Integrations.OnUnhandledRejection({
+          mode: 'warn',
+        }),
+      ],
+
+      // Custom tags
+      initialScope: {
+        tags: {
+          component: 'digikop-api',
+          version: process.env.npm_package_version || '1.0.0',
+        },
+      },
+    });
+
+    // Request handler must be the first middleware
+    app.use(Sentry.Handlers.requestHandler());
+    
+    // TracingHandler creates a trace for every incoming request
+    app.use(Sentry.Handlers.tracingHandler());
+
+    this.initialized = true;
+    console.log('✅ Sentry monitoring initialized');
+  }
+
+  /**
+   * Add error handler middleware (must be added after routes)
+   */
+  static addErrorHandler(app: Express): void {
+    if (!this.initialized) {
+      return;
+    }
+
+    // Error handler must be before any other error middleware
+    app.use(Sentry.Handlers.errorHandler({
+      shouldHandleError(error) {
+        // Capture all server errors
+        return error.status >= 500;
+      },
+    }));
+  }
+
+  /**
+   * Capture custom error with context
+   */
+  static captureError(error: Error, context?: Record<string, any>): void {
+    if (!this.initialized) {
+      console.error('Monitoring not initialized:', error);
+      return;
+    }
+
+    Sentry.withScope((scope) => {
+      if (context) {
+        Object.entries(context).forEach(([key, value]) => {
+          scope.setContext(key, value);
+        });
+      }
+      
+      Sentry.captureException(error);
+    });
+  }
+
+  /**
+   * Capture custom message with level
+   */
+  static captureMessage(
+    message: string, 
+    level: 'fatal' | 'error' | 'warning' | 'info' | 'debug' = 'info',
+    context?: Record<string, any>
+  ): void {
+    if (!this.initialized) {
+      console.log(`[${level.toUpperCase()}] ${message}`, context);
+      return;
+    }
+
+    Sentry.withScope((scope) => {
+      if (context) {
+        Object.entries(context).forEach(([key, value]) => {
+          scope.setContext(key, value);
+        });
+      }
+      
+      Sentry.captureMessage(message, level);
+    });
+  }
+
+  /**
+   * Add user context to current scope
+   */
+  static setUser(user: { id: string; email?: string; role?: string }): void {
+    if (!this.initialized) {
+      return;
+    }
+
+    Sentry.setUser({
+      id: user.id,
+      email: user.email,
+      role: user.role,
+    });
+  }
+
+  /**
+   * Add custom tags to current scope
+   */
+  static setTags(tags: Record<string, string>): void {
+    if (!this.initialized) {
+      return;
+    }
+
+    Sentry.setTags(tags);
+  }
+
+  /**
+   * Start a custom transaction for performance monitoring
+   */
+  static startTransaction(name: string, op: string): any {
+    if (!this.initialized) {
+      return null;
+    }
+
+    return Sentry.startTransaction({ name, op });
+  }
+
+  /**
+   * Performance monitoring for database queries
+   */
+  static async monitorDatabaseQuery<T>(
+    queryName: string,
+    queryFn: () => Promise<T>
+  ): Promise<T> {
+    if (!this.initialized) {
+      return queryFn();
+    }
+
+    const transaction = Sentry.startTransaction({
+      name: queryName,
+      op: 'db.query',
+    });
+
+    try {
+      const result = await queryFn();
+      transaction.setStatus('ok');
+      return result;
+    } catch (error) {
+      transaction.setStatus('internal_error');
+      this.captureError(error as Error, { queryName });
+      throw error;
+    } finally {
+      transaction.finish();
+    }
+  }
+
+  /**
+   * Performance monitoring for external API calls
+   */
+  static async monitorExternalCall<T>(
+    serviceName: string,
+    callFn: () => Promise<T>
+  ): Promise<T> {
+    if (!this.initialized) {
+      return callFn();
+    }
+
+    const transaction = Sentry.startTransaction({
+      name: `external.${serviceName}`,
+      op: 'http.client',
+    });
+
+    try {
+      const result = await callFn();
+      transaction.setStatus('ok');
+      return result;
+    } catch (error) {
+      transaction.setStatus('internal_error');
+      this.captureError(error as Error, { serviceName });
+      throw error;
+    } finally {
+      transaction.finish();
+    }
+  }
+
+  /**
+   * Monitor conflict detection performance
+   */
+  static async monitorConflictDetection<T>(
+    projectId: string,
+    detectionFn: () => Promise<T>
+  ): Promise<T> {
+    return this.monitorDatabaseQuery(
+      `conflict_detection.${projectId}`,
+      detectionFn
+    );
+  }
+
+  /**
+   * Monitor email sending
+   */
+  static async monitorEmailSending<T>(
+    emailType: string,
+    sendFn: () => Promise<T>
+  ): Promise<T> {
+    return this.monitorExternalCall(
+      `email.${emailType}`,
+      sendFn
+    );
+  }
+
+  /**
+   * Add breadcrumb for debugging
+   */
+  static addBreadcrumb(
+    message: string,
+    category: string,
+    level: 'fatal' | 'error' | 'warning' | 'info' | 'debug' = 'info',
+    data?: Record<string, any>
+  ): void {
+    if (!this.initialized) {
+      return;
+    }
+
+    Sentry.addBreadcrumb({
+      message,
+      category,
+      level,
+      data,
+      timestamp: Date.now() / 1000,
+    });
+  }
+
+  /**
+   * Flush pending events (useful for serverless)
+   */
+  static async flush(timeout = 2000): Promise<boolean> {
+    if (!this.initialized) {
+      return true;
+    }
+
+    return Sentry.flush(timeout);
+  }
+
+  /**
+   * Close Sentry client
+   */
+  static async close(timeout = 2000): Promise<boolean> {
+    if (!this.initialized) {
+      return true;
+    }
+
+    return Sentry.close(timeout);
+  }
+}
+
+// Export singleton instance
+export const monitoring = MonitoringService;

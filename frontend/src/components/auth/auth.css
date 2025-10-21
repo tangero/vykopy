@@ -1,179 +1,76 @@
-/* Authentication Form Styles */
-.login-form-container,
-.register-form-container {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  padding: 20px;
+/* Czech Gov Design System Authentication Styles */
+
+/* These styles extend the base Gov DS styles for authentication components */
+.gov-auth-container {
+  background: linear-gradient(135deg, var(--gov-color-primary) 0%, #4a5568 100%);
 }
 
-.login-form-card,
-.register-form-card {
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-  padding: 40px;
-  width: 100%;
-  max-width: 400px;
-}
-
-.login-header,
-.register-header {
+.gov-auth-card .gov-card__header {
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: var(--gov-spacing-xl);
 }
 
-.login-header h1,
-.register-header h1 {
-  color: #333;
-  font-size: 28px;
+.gov-auth-card .gov-card__title {
+  color: var(--gov-color-primary);
+  font-size: 1.75rem;
   font-weight: 600;
-  margin: 0 0 8px 0;
+  margin-bottom: var(--gov-spacing-sm);
 }
 
-.login-header p,
-.register-header p {
-  color: #666;
-  font-size: 16px;
+.gov-auth-card .gov-card__subtitle {
+  color: #6c757d;
+  font-size: 1rem;
   margin: 0;
 }
 
-.login-form,
-.register-form {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+.gov-form .gov-form-group {
+  margin-bottom: var(--gov-spacing-lg);
 }
 
-.form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.form-group label {
-  font-weight: 500;
-  color: #333;
-  font-size: 14px;
-}
-
-.form-input {
-  padding: 12px 16px;
-  border: 2px solid #e1e5e9;
-  border-radius: 8px;
-  font-size: 16px;
-  transition: border-color 0.2s ease;
-}
-
-.form-input:focus {
-  outline: none;
-  border-color: #667eea;
-}
-
-.form-input.error {
-  border-color: #e74c3c;
-}
-
-.form-input:disabled {
-  background-color: #f8f9fa;
-  cursor: not-allowed;
-}
-
-.error-message {
-  color: #e74c3c;
-  font-size: 12px;
-  font-weight: 500;
-}
-
-.error-banner {
-  background-color: #fdf2f2;
-  border: 1px solid #fecaca;
-  color: #dc2626;
-  padding: 12px 16px;
-  border-radius: 8px;
-  font-size: 14px;
+.gov-auth-error {
+  margin: var(--gov-spacing-md) 0;
   text-align: center;
 }
 
-.login-button,
-.register-button {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  border: none;
-  padding: 14px 20px;
-  border-radius: 8px;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+.gov-auth-success {
+  padding: var(--gov-spacing-xl);
 }
 
-.login-button:hover,
-.register-button:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+.gov-auth-success h2 {
+  color: var(--gov-color-success);
+  font-size: 1.5rem;
+  margin: var(--gov-spacing-sm) 0;
 }
 
-.login-button:disabled,
-.register-button:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
+.gov-auth-success p {
+  color: #6c757d;
+  line-height: 1.6;
+  margin: var(--gov-spacing-md) 0;
 }
 
-.login-footer,
-.register-footer {
+.gov-auth-footer {
   text-align: center;
-  margin-top: 24px;
-  padding-top: 24px;
-  border-top: 1px solid #e1e5e9;
+  margin-top: var(--gov-spacing-xl);
+  padding-top: var(--gov-spacing-lg);
+  border-top: 1px solid #e9ecef;
 }
 
-.login-footer p,
-.register-footer p {
-  color: #666;
-  font-size: 14px;
+.gov-auth-footer p {
+  color: #6c757d;
+  font-size: 0.875rem;
   margin: 0;
 }
 
-.register-link,
-.login-link {
-  color: #667eea;
+.gov-link {
+  color: var(--gov-color-primary);
   text-decoration: none;
   font-weight: 500;
+  transition: color 0.2s ease;
 }
 
-.register-link:hover,
-.login-link:hover {
+.gov-link:hover {
+  color: #0056b3;
   text-decoration: underline;
-}
-
-/* Success Message */
-.success-message {
-  text-align: center;
-  padding: 40px 20px;
-}
-
-.success-message h2 {
-  color: #059669;
-  font-size: 24px;
-  margin: 0 0 16px 0;
-}
-
-.success-message p {
-  color: #666;
-  font-size: 16px;
-  line-height: 1.5;
-  margin: 0 0 24px 0;
-}
-
-.success-icon {
-  font-size: 48px;
-  color: #059669;
-  margin-top: 20px;
 }
 
 /* Loading Spinner */

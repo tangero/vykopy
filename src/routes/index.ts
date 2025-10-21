@@ -7,6 +7,9 @@ import territoryRoutes from './territories';
 import projectRoutes, { initializeProjectRoutes } from './projects';
 import moratoriumRoutes, { initializeMoratoriumRoutes } from './moratoriums';
 import spatialRoutes, { initializeSpatialRoutes } from './spatial';
+import fileRoutes from './files';
+import auditRoutes from './audit';
+import healthRoutes, { initializeHealthRoutes } from './health';
 
 const router = Router();
 
@@ -15,6 +18,7 @@ export const initializeRoutes = (db: Pool): void => {
   initializeProjectRoutes(db);
   initializeMoratoriumRoutes(db);
   initializeSpatialRoutes(db);
+  initializeHealthRoutes(db);
 };
 
 // Health check endpoint
@@ -42,16 +46,21 @@ router.get('/info', (req: Request, res: Response) => {
       projects: '/api/projects',
       moratoriums: '/api/moratoriums',
       spatial: '/api/spatial',
+      files: '/api/files',
+      audit: '/api/audit',
     },
   });
 });
 
 // Mount route modules
+router.use('/health', healthRoutes);
 router.use('/auth', authRoutes);
 router.use('/users', userRoutes);
 router.use('/territories', territoryRoutes);
 router.use('/projects', projectRoutes);
 router.use('/moratoriums', moratoriumRoutes);
 router.use('/spatial', spatialRoutes);
+router.use('/files', fileRoutes);
+router.use('/audit', auditRoutes);
 
 export default router;

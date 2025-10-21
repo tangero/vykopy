@@ -68,7 +68,19 @@ const MapLayerControl: React.FC<MapLayerControlProps> = ({ map, className = '' }
         const newVisible = !overlay.visible;
         
         // Toggle layer visibility on map
-        if (map.getLayer(overlayId)) {
+        // For moratoriums, we need to toggle multiple layers
+        if (overlayId === 'moratoriums') {
+          const moratoriumLayers = ['moratoriums-fill', 'moratoriums-line', 'moratoriums-pattern', 'moratoriums-point', 'moratoriums-symbol'];
+          moratoriumLayers.forEach(layerId => {
+            if (map.getLayer(layerId)) {
+              map.setLayoutProperty(
+                layerId,
+                'visibility',
+                newVisible ? 'visible' : 'none'
+              );
+            }
+          });
+        } else if (map.getLayer(overlayId)) {
           map.setLayoutProperty(
             overlayId,
             'visibility',
