@@ -18,28 +18,33 @@ const pool = new Pool({
 
 async function runMigration() {
   const client = await pool.connect();
-  
+
   try {
     console.log('🚀 Starting database migration...');
-    
-    // Check if PostGIS extension is available
+
+    // Check if PostGIS extension is available (optional - spatial features only)
     console.log('📍 Checking PostGIS extension...');
+    let hasPostGIS = false;
     try {
       await client.query('CREATE EXTENSION IF NOT EXISTS postgis');
       await client.query('CREATE EXTENSION IF NOT EXISTS postgis_topology');
       console.log('✅ PostGIS extension enabled');
+      hasPostGIS = true;
     } catch (error) {
-      console.error('❌ Failed to enable PostGIS extension:', error);
-      throw error;
+      console.warn('⚠️  PostGIS extension not available - spatial features will be disabled');
+      console.warn('   This is OK for basic functionality. Spatial operations (maps) will not work.');
+      console.warn('   To enable spatial features, use a PostgreSQL database with PostGIS support.');
     }
 
-    // Verify PostGIS installation
-    try {
-      const result = await client.query('SELECT PostGIS_Version()');
-      console.log(`✅ PostGIS version: ${result.rows[0].postgis_version}`);
-    } catch (error) {
-      console.error('❌ PostGIS verification failed:', error);
-      throw error;
+    // Verify PostGIS installation (if available)
+    if (hasPostGIS) {
+      try {
+        const result = await client.query('SELECT PostGIS_Version()');
+        console.log(`✅ PostGIS version: ${result.rows[0].postgis_version}`);
+      } catch (error) {
+        console.warn('⚠️  PostGIS verification failed - spatial features disabled');
+        hasPostGIS = false;
+      }
     }
 
     // Run the main migration script
@@ -55,11 +60,11 @@ async function runMigration() {
       throw error;
     }
 
-    // Create spatial indexes for performance
-    console.log('🔍 Creating spatial indexes...');
-    const spatialIndexes = [
-      'CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_projects_geometry_gist ON projects USING GIST(geometry)',
-      'CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_moratoriums_geometry_gist ON moratoriums USING GIST(geometry)',
+    // Create indexes for performance
+    console.log('🔍 Creating database indexes...');
+
+    // Non-spatial indexes (always create)
+    const standardIndexes = [
       'CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_projects_state_dates ON projects(state, start_date, end_date)',
       'CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_projects_applicant_state ON projects(applicant_id, state)',
       'CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_projects_municipalities ON projects USING GIN(affected_municipalities)',
@@ -69,7 +74,7 @@ async function runMigration() {
       'CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_users_active ON users(role) WHERE is_active = true'
     ];
 
-    for (const indexSQL of spatialIndexes) {
+    for (const indexSQL of standardIndexes) {
       try {
         await client.query(indexSQL);
         console.log(`✅ Created index: ${indexSQL.split(' ')[5]}`);
@@ -80,6 +85,30 @@ async function runMigration() {
           console.warn(`⚠️  Failed to create index: ${error.message}`);
         }
       }
+    }
+
+    // Spatial indexes (only if PostGIS is available)
+    if (hasPostGIS) {
+      console.log('🗺️  Creating spatial indexes...');
+      const spatialIndexes = [
+        'CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_projects_geometry_gist ON projects USING GIST(geometry)',
+        'CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_moratoriums_geometry_gist ON moratoriums USING GIST(geometry)'
+      ];
+
+      for (const indexSQL of spatialIndexes) {
+        try {
+          await client.query(indexSQL);
+          console.log(`✅ Created spatial index: ${indexSQL.split(' ')[5]}`);
+        } catch (error: any) {
+          if (error.code === '42P07') {
+            console.log(`ℹ️  Spatial index already exists: ${indexSQL.split(' ')[5]}`);
+          } else {
+            console.warn(`⚠️  Failed to create spatial index: ${error.message}`);
+          }
+        }
+      }
+    } else {
+      console.log('⚠️  Skipping spatial indexes (PostGIS not available)');
     }
 
     // Verify tables were created
