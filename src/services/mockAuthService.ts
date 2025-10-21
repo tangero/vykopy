@@ -1,6 +1,6 @@
 // Mock authentication service for testing without database
 import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
+import jwt, { SignOptions } from 'jsonwebtoken';
 import { config } from '../config';
 
 interface MockUser {
@@ -87,13 +87,13 @@ export class MockAuthService {
 
     // Generate JWT token
     const token = jwt.sign(
-      { 
-        userId: user.id, 
-        email: user.email, 
-        role: user.role 
+      {
+        userId: user.id,
+        email: user.email,
+        role: user.role
       },
       config.jwt.secret,
-      { expiresIn: config.jwt.expiresIn }
+      { expiresIn: config.jwt.expiresIn } as SignOptions
     );
 
     return { user, token };

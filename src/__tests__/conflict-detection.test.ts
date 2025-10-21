@@ -703,14 +703,39 @@ describe('ConflictDetectionService', () => {
     });
 
     it('should update conflicting projects bidirectionally', async () => {
-      // Create a fresh mock for this specific test
-      const freshMockDb = { query: jest.fn() };
-      const freshConflictService = new ConflictDetectionService(freshMockDb as any);
-      
-      const mockUpdateConflictStatus = jest.fn().mockResolvedValue(undefined);
-      jest.spyOn(freshConflictService['projectModel'], 'updateConflictStatus').mockImplementation(mockUpdateConflictStatus);
+      // Clear all previous mocks
+      jest.clearAllMocks();
 
-      await freshConflictService.updateProjectConflictStatus('project-1', mockConflictResult);
+      const mockUpdateConflictStatus = jest.fn().mockResolvedValue(undefined);
+      jest.spyOn(conflictService['projectModel'], 'updateConflictStatus').mockImplementation(mockUpdateConflictStatus);
+
+      // Ensure mockConflictResult has proper structure for this test
+      const testConflictResult: ConflictDetectionResult = {
+        hasConflict: true,
+        spatialConflicts: [{
+          id: 'conflict-1',
+          name: 'Conflicting Project',
+          applicantId: 'user-2',
+          contractorOrganization: 'Test Contractor',
+          contractorContact: undefined,
+          state: 'approved',
+          startDate: new Date('2024-01-15'),
+          endDate: new Date('2024-01-25'),
+          geometry: testGeometry,
+          workType: 'Test Work',
+          workCategory: 'Test Category',
+          description: 'Test project',
+          hasConflict: false,
+          conflictingProjectIds: [], // Empty array means project-1 should be added
+          affectedMunicipalities: ['CZ0201'],
+          createdAt: new Date(),
+          updatedAt: new Date()
+        }],
+        temporalConflicts: [],
+        moratoriumViolations: []
+      };
+
+      await conflictService.updateProjectConflictStatus('project-1', testConflictResult);
 
       // Should update both the original project and the conflicting project
       expect(mockUpdateConflictStatus).toHaveBeenCalledTimes(2);

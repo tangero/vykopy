@@ -1,5 +1,5 @@
 import request from 'supertest';
-import jwt from 'jsonwebtoken';
+import jwt, { SignOptions } from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import app from '../app';
 import { AuthService } from '../services/AuthService';
@@ -76,12 +76,13 @@ describe('Authentication Service', () => {
     });
 
     it('should reject expired JWT token', () => {
+      const options: SignOptions = { expiresIn: '-1h' };
       const expiredToken = jwt.sign(
         { userId: mockUser.id, email: mockUser.email, role: mockUser.role },
         process.env.JWT_SECRET!,
-        { expiresIn: '-1h' }
+        options
       );
-      
+
       expect(() => {
         AuthService.verifyToken(expiredToken);
       }).toThrow();

@@ -4,7 +4,7 @@ import { ProjectModel } from '../models/Project';
 import { UserModel } from '../models/User';
 import { ConflictDetectionService } from '../services/ConflictDetectionService';
 import { authenticateToken } from '../middleware/auth';
-import { RBACMiddleware } from '../middleware/rbac';
+import { RBACMiddleware, canAccessProject } from '../middleware/rbac';
 import { createProjectSchema, updateProjectSchema } from '../validation/schemas';
 import { 
   validateProjectInput, 
@@ -711,7 +711,7 @@ router.get('/:id/history', authenticateToken, async (req: Request, res: Response
     }
 
     // Check permissions
-    const hasAccess = await RBACMiddleware.checkProjectAccess(user, project);
+    const hasAccess = await canAccessProject(user.id, id, user.role);
     if (!hasAccess) {
       res.status(403).json({
         error: {
@@ -784,7 +784,7 @@ router.get('/:id/history/export', authenticateToken, async (req: Request, res: R
     }
 
     // Check permissions
-    const hasAccess = await RBACMiddleware.checkProjectAccess(user, project);
+    const hasAccess = await canAccessProject(user.id, id, user.role);
     if (!hasAccess) {
       res.status(403).json({
         error: {
@@ -849,7 +849,7 @@ router.get('/:id/timeline', authenticateToken, async (req: Request, res: Respons
     }
 
     // Check permissions
-    const hasAccess = await RBACMiddleware.checkProjectAccess(user, project);
+    const hasAccess = await canAccessProject(user.id, id, user.role);
     if (!hasAccess) {
       res.status(403).json({
         error: {
@@ -863,7 +863,7 @@ router.get('/:id/timeline', authenticateToken, async (req: Request, res: Respons
 
     const { ProjectHistoryService } = await import('../services/ProjectHistoryService');
     const historyService = new ProjectHistoryService(projectModel['db']);
-    
+
     const timeline = await historyService.getProjectStateTimeline(id);
     const statistics = await historyService.getProjectChangeStatistics(id);
 

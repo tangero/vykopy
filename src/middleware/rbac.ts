@@ -338,3 +338,12 @@ export class AccessUtils {
 export const requireRegionalAdmin = RBACMiddleware.requireRole(['regional_admin']);
 export const requireCoordinatorOrAdmin = RBACMiddleware.requireRole(['regional_admin', 'municipal_coordinator']);
 export const requireAnyRole = RBACMiddleware.requireRole(['regional_admin', 'municipal_coordinator', 'applicant']);
+
+// Export helper functions
+export async function canAccessProject(userId: string, projectId: string, userRole: UserRole): Promise<boolean> {
+  return AccessUtils.canAccessProject(userId, projectId, userRole);
+}
+
+export function buildTerritorialFilter(userId: string, userRole: UserRole): string {
+  return AccessUtils.buildTerritorialFilter(userId, userRole);
+}

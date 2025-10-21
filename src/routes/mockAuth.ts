@@ -15,15 +15,16 @@ router.post('/register',
     body('organization').optional().trim(),
     body('role').optional().isIn(['regional_admin', 'municipal_coordinator', 'applicant'])
   ],
-  async (req: Request, res: Response) => {
+  async (req: Request, res: Response): Promise<void> => {
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
-        return res.status(400).json({
+        res.status(400).json({
           success: false,
           message: 'Validation failed',
           errors: errors.array()
         });
+        return;
       }
 
       const { email, password, firstName, lastName, role, organization } = req.body;
@@ -61,15 +62,16 @@ router.post('/login',
     body('email').isEmail().normalizeEmail(),
     body('password').notEmpty()
   ],
-  async (req: Request, res: Response) => {
+  async (req: Request, res: Response): Promise<void> => {
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
-        return res.status(400).json({
+        res.status(400).json({
           success: false,
           message: 'Validation failed',
           errors: errors.array()
         });
+        return;
       }
 
       const { email, password } = req.body;
@@ -98,14 +100,15 @@ router.post('/login',
 );
 
 // Get current user endpoint
-router.get('/me', async (req: Request, res: Response) => {
+router.get('/me', async (req: Request, res: Response): Promise<void> => {
   try {
     const authHeader = req.headers.authorization;
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      return res.status(401).json({
+      res.status(401).json({
         success: false,
         message: 'No token provided'
       });
+      return;
     }
 
     const token = authHeader.substring(7);
@@ -113,10 +116,11 @@ router.get('/me', async (req: Request, res: Response) => {
     const user = await MockAuthService.getUserById(decoded.userId);
 
     if (!user) {
-      return res.status(404).json({
+      res.status(404).json({
         success: false,
         message: 'User not found'
       });
+      return;
     }
 
     // Don't return password hash

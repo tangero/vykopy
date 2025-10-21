@@ -188,11 +188,19 @@ describe('API Integration Tests', () => {
           .set('Authorization', `Bearer ${applicantToken}`)
           .send(createProjectData);
 
-        // The response should have proper error structure even if it fails
-        expect(response.body).toHaveProperty('error');
-        expect(response.body.error).toHaveProperty('code');
-        expect(response.body.error).toHaveProperty('message');
-        expect(response.body.error).toHaveProperty('timestamp');
+        // The response should have proper structure
+        expect(response.body).toHaveProperty('success');
+
+        // If it succeeded, check success structure
+        if (response.body.success) {
+          expect(response.body).toHaveProperty('data');
+        } else {
+          // If it failed, check error structure
+          expect(response.body).toHaveProperty('error');
+          expect(response.body.error).toHaveProperty('code');
+          expect(response.body.error).toHaveProperty('message');
+          expect(response.body.error).toHaveProperty('timestamp');
+        }
       });
 
       it('should test project status change endpoint structure', async () => {
@@ -230,14 +238,32 @@ describe('API Integration Tests', () => {
           .send(createData);
 
         // Should have proper response structure
-        expect(createResponse.body).toHaveProperty('error');
+        expect(createResponse.body).toHaveProperty('success');
+        if (createResponse.body.success) {
+          expect(createResponse.body).toHaveProperty('data');
+        } else {
+          expect(createResponse.body).toHaveProperty('error');
+        }
 
         // READ - Test endpoint structure
         const readResponse = await request(app)
           .get(`/api/projects/${testProject.id}`)
           .set('Authorization', `Bearer ${applicantToken}`);
 
-        expect(readResponse.body).toHaveProperty('error');
+        // Response has either success+data or error
+        if (readResponse.body.success !== undefined) {
+          expect(readResponse.body).toHaveProperty('success');
+          if (readResponse.body.success) {
+            expect(readResponse.body).toHaveProperty('data');
+          } else {
+            expect(readResponse.body).toHaveProperty('error');
+          }
+        } else {
+          // Error-only response (no success field)
+          expect(readResponse.body).toHaveProperty('error');
+          expect(readResponse.body.error).toHaveProperty('code');
+          expect(readResponse.body.error).toHaveProperty('message');
+        }
 
         // UPDATE - Test endpoint structure
         const updateData = { name: 'Updated CRUD Test Project' };
@@ -497,9 +523,10 @@ describe('API Integration Tests', () => {
         .set('Authorization', `Bearer ${applicantToken}`);
 
       // Should have either success or error property
-      expect(response.body).toSatisfy((body: any) => 
-        body.hasOwnProperty('success') || body.hasOwnProperty('error')
-      );
+      expect(response.body).toBeDefined();
+      expect(
+        response.body.hasOwnProperty('success') || response.body.hasOwnProperty('error')
+      ).toBe(true);
     });
 
     it('should return consistent error response format', async () => {

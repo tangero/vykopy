@@ -1,8 +1,7 @@
 import { Router, Request, Response } from 'express';
 import { AuditService } from '../services/AuditService';
 import { pool } from '../config/database';
-import { authenticateToken } from '../middleware/auth';
-import { requireRole } from '../middleware/rbac';
+import { authenticateToken, requireRole } from '../middleware/auth';
 
 const router = Router();
 const auditService = new AuditService(pool);
@@ -11,18 +10,26 @@ const auditService = new AuditService(pool);
  * GET /api/audit/entity/:entityType/:entityId
  * Get audit logs for a specific entity
  */
-router.get('/entity/:entityType/:entityId', 
+router.get('/entity/:entityType/:entityId',
   authenticateToken,
-  async (req: Request, res: Response) => {
+  async (req: Request, res: Response): Promise<void> => {
     try {
       const { entityType, entityId } = req.params;
       const { page = 1, limit = 50, action } = req.query;
 
       // Validate entity type
-      if (!['project', 'user', 'moratorium'].includes(entityType)) {
-        return res.status(400).json({
+      if (!entityType || !['project', 'user', 'moratorium'].includes(entityType)) {
+        res.status(400).json({
           error: 'Invalid entity type. Must be project, user, or moratorium'
         });
+        return;
+      }
+
+      if (!entityId) {
+        res.status(400).json({
+          error: 'Entity ID is required'
+        });
+        return;
       }
 
       // Check permissions - users can only view audit logs for entities they have access to
@@ -39,16 +46,18 @@ router.get('/entity/:entityType/:entityId',
             WHERE id = $1
           `;
           const projectResult = await pool.query(projectQuery, [entityId]);
-          
+
           if (projectResult.rows.length === 0) {
-            return res.status(404).json({ error: 'Project not found' });
+            res.status(404).json({ error: 'Project not found' });
+            return;
           }
 
           const project = projectResult.rows[0];
-          
+
           // Applicants can view their own project audit logs
           if (user.role === 'applicant' && project.applicant_id !== user.id) {
-            return res.status(403).json({ error: 'Access denied' });
+            res.status(403).json({ error: 'Access denied' });
+            return;
           }
 
           // Municipal coordinators need territorial access
@@ -58,30 +67,32 @@ router.get('/entity/:entityType/:entityId',
             `;
             const territoryResult = await pool.query(territoryQuery, [user.id]);
             const userMunicipalities = territoryResult.rows.map(row => row.municipality_code);
-            
-            const hasAccess = project.affected_municipalities?.some((municipality: string) => 
+
+            const hasAccess = project.affected_municipalities?.some((municipality: string) =>
               userMunicipalities.includes(municipality)
             );
-            
+
             if (!hasAccess) {
-              return res.status(403).json({ error: 'Access denied' });
+              res.status(403).json({ error: 'Access denied' });
+              return;
             }
           }
         }
-        
+
         // For user audit logs, only allow viewing own logs unless admin
         if (entityType === 'user' && entityId !== user.id) {
-          return res.status(403).json({ error: 'Access denied' });
+          res.status(403).json({ error: 'Access denied' });
+          return;
         }
       }
 
       const result = await auditService.getEntityAuditLogs(
         entityType,
-        entityId,
+        entityId as string,
         {
           page: parseInt(page as string),
           limit: parseInt(limit as string),
-          action: action as string
+          action: action as string | undefined
         }
       );
 
@@ -109,18 +120,23 @@ router.get('/entity/:entityType/:entityId',
 router.get('/user/:userId',
   authenticateToken,
   requireRole(['regional_admin']),
-  async (req: Request, res: Response) => {
+  async (req: Request, res: Response): Promise<void> => {
     try {
       const { userId } = req.params;
       const { page = 1, limit = 50, entityType, action } = req.query;
 
+      if (!userId) {
+        res.status(400).json({ error: 'User ID is required' });
+        return;
+      }
+
       const result = await auditService.getUserAuditLogs(
-        userId,
+        userId as string,
         {
           page: parseInt(page as string),
           limit: parseInt(limit as string),
-          entityType: entityType as string,
-          action: action as string
+          entityType: entityType as string | undefined,
+          action: action as string | undefined
         }
       );
 

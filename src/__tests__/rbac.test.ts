@@ -3,7 +3,7 @@ import { RBACMiddleware, AccessUtils } from '../middleware/rbac';
 import { authenticateToken, requireRole, requireTerritorialAccess } from '../middleware/auth';
 import { UserModel } from '../models/User';
 import { User, UserRole } from '../types';
-import jwt from 'jsonwebtoken';
+import jwt, { SignOptions } from 'jsonwebtoken';
 
 // Mock dependencies
 jest.mock('../models/User');
@@ -117,12 +117,13 @@ describe('RBAC Middleware', () => {
     });
 
     it('should accept valid token and set user in request', async () => {
+      const options: SignOptions = { expiresIn: '1h' };
       const token = jwt.sign(
         { userId: mockUsers.applicant.id, email: mockUsers.applicant.email, role: mockUsers.applicant.role },
         process.env.JWT_SECRET!,
-        { expiresIn: '1h' }
+        options
       );
-      
+
       mockRequest.headers = { authorization: `Bearer ${token}` };
       mockUserModel.findById.mockResolvedValue(mockUsers.applicant);
 
@@ -134,12 +135,13 @@ describe('RBAC Middleware', () => {
     });
 
     it('should reject token when user not found in database', async () => {
+      const options: SignOptions = { expiresIn: '1h' };
       const token = jwt.sign(
         { userId: 'nonexistent-id', email: 'test@example.com', role: 'applicant' },
         process.env.JWT_SECRET!,
-        { expiresIn: '1h' }
+        options
       );
-      
+
       mockRequest.headers = { authorization: `Bearer ${token}` };
       mockUserModel.findById.mockResolvedValue(null);
 

@@ -252,11 +252,11 @@ export const validateMoratoriumInput = [
 /**
  * Validation error handler
  */
-export const handleValidationErrors = (req: Request, res: Response, next: NextFunction) => {
+export const handleValidationErrors = (req: Request, res: Response, next: NextFunction): void => {
   const errors = validationResult(req);
-  
+
   if (!errors.isEmpty()) {
-    return res.status(400).json({
+    res.status(400).json({
       error: {
         code: 'VALIDATION_ERROR',
         message: 'Neplatné vstupní data',
@@ -266,8 +266,9 @@ export const handleValidationErrors = (req: Request, res: Response, next: NextFu
         }))
       }
     });
+    return;
   }
-  
+
   next();
 };
 
@@ -356,9 +357,16 @@ export const corsOptions = {
   origin: (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
     const allowedOrigins = [
       'http://localhost:3000',
+      'http://localhost:5173', // Vite dev server
       'https://digikop.railway.app',
       process.env.FRONTEND_URL
     ].filter(Boolean);
+
+    // In test environment, allow all localhost origins
+    if (process.env.NODE_ENV === 'test' && origin?.startsWith('http://localhost')) {
+      callback(null, true);
+      return;
+    }
 
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);

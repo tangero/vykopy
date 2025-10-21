@@ -236,7 +236,19 @@ describe('ProjectModel', () => {
       });
 
       // Mock audit log insertion
-      mockDb.query.mockResolvedValue({ rows: [] });
+      mockDb.query.mockResolvedValue({
+        rows: [{
+          id: 'audit-log-id',
+          entity_type: 'project',
+          entity_id: 'test-id',
+          action: 'state_change',
+          user_id: 'coordinator-id',
+          old_values: { state: 'pending_approval' },
+          new_values: { state: 'approved' },
+          ip_address: null,
+          created_at: new Date()
+        }]
+      });
 
       const result = await projectModel.changeState('test-id', 'approved', 'coordinator-id');
 
@@ -278,6 +290,21 @@ describe('ProjectModel', () => {
 
       // Test deletion of draft project (hard delete)
       jest.spyOn(projectModel, 'findById').mockResolvedValueOnce(draftProject);
+      // First call is for audit log insertion
+      mockDb.query.mockResolvedValueOnce({
+        rows: [{
+          id: 'audit-log-id',
+          entity_type: 'project',
+          entity_id: 'draft-id',
+          action: 'delete',
+          user_id: 'user-id',
+          old_values: draftProject,
+          new_values: null,
+          ip_address: null,
+          created_at: new Date()
+        }]
+      });
+      // Second call is for actual deletion
       mockDb.query.mockResolvedValueOnce({ rowCount: 1 });
 
       const draftResult = await projectModel.delete('draft-id', 'user-id');

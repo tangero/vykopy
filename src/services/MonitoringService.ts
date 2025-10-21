@@ -1,5 +1,4 @@
 import * as Sentry from '@sentry/node';
-import * as Tracing from '@sentry/tracing';
 import { Express } from 'express';
 import { config } from '../config';
 
@@ -11,6 +10,7 @@ export class MonitoringService {
    */
   static initialize(app: Express): void {
     if (this.initialized || !process.env.SENTRY_DSN) {
+      console.log('⚠️  Sentry monitoring not initialized (no DSN provided)');
       return;
     }
 
@@ -18,46 +18,29 @@ export class MonitoringService {
       dsn: process.env.SENTRY_DSN,
       environment: config.nodeEnv,
       release: process.env.npm_package_version || '1.0.0',
-      
+
       // Performance monitoring
       tracesSampleRate: config.nodeEnv === 'production' ? 0.1 : 1.0,
-      
+
       // Error filtering
       beforeSend(event, hint) {
         // Filter out non-critical errors in production
         if (config.nodeEnv === 'production') {
           const error = hint.originalException;
-          
+
           // Skip validation errors
           if (error instanceof Error && error.message.includes('validation')) {
             return null;
           }
-          
+
           // Skip rate limit errors
           if (error instanceof Error && error.message.includes('rate limit')) {
             return null;
           }
         }
-        
+
         return event;
       },
-
-      integrations: [
-        // Express integration
-        new Sentry.Integrations.Http({ tracing: true }),
-        new Tracing.Integrations.Express({ app }),
-        
-        // Database integration
-        new Tracing.Integrations.Postgres(),
-        
-        // Node.js integrations
-        new Sentry.Integrations.OnUncaughtException({
-          exitEvenIfOtherHandlersAreRegistered: false,
-        }),
-        new Sentry.Integrations.OnUnhandledRejection({
-          mode: 'warn',
-        }),
-      ],
 
       // Custom tags
       initialScope: {
@@ -68,11 +51,8 @@ export class MonitoringService {
       },
     });
 
-    // Request handler must be the first middleware
-    app.use(Sentry.Handlers.requestHandler());
-    
-    // TracingHandler creates a trace for every incoming request
-    app.use(Sentry.Handlers.tracingHandler());
+    // Setup Express error handling and request isolation
+    Sentry.setupExpressErrorHandler(app);
 
     this.initialized = true;
     console.log('✅ Sentry monitoring initialized');
@@ -86,13 +66,7 @@ export class MonitoringService {
       return;
     }
 
-    // Error handler must be before any other error middleware
-    app.use(Sentry.Handlers.errorHandler({
-      shouldHandleError(error) {
-        // Capture all server errors
-        return error.status >= 500;
-      },
-    }));
+    // Error handler is set up in initialize() via setupExpressErrorHandler
   }
 
   /**
@@ -173,7 +147,7 @@ export class MonitoringService {
       return null;
     }
 
-    return Sentry.startTransaction({ name, op });
+    return Sentry.startSpan({ name, op }, () => {});
   }
 
   /**
@@ -187,22 +161,20 @@ export class MonitoringService {
       return queryFn();
     }
 
-    const transaction = Sentry.startTransaction({
-      name: queryName,
-      op: 'db.query',
-    });
-
-    try {
-      const result = await queryFn();
-      transaction.setStatus('ok');
-      return result;
-    } catch (error) {
-      transaction.setStatus('internal_error');
-      this.captureError(error as Error, { queryName });
-      throw error;
-    } finally {
-      transaction.finish();
-    }
+    return Sentry.startSpan(
+      {
+        name: queryName,
+        op: 'db.query',
+      },
+      async () => {
+        try {
+          return await queryFn();
+        } catch (error) {
+          this.captureError(error as Error, { queryName });
+          throw error;
+        }
+      }
+    );
   }
 
   /**
@@ -216,22 +188,20 @@ export class MonitoringService {
       return callFn();
     }
 
-    const transaction = Sentry.startTransaction({
-      name: `external.${serviceName}`,
-      op: 'http.client',
-    });
-
-    try {
-      const result = await callFn();
-      transaction.setStatus('ok');
-      return result;
-    } catch (error) {
-      transaction.setStatus('internal_error');
-      this.captureError(error as Error, { serviceName });
-      throw error;
-    } finally {
-      transaction.finish();
-    }
+    return Sentry.startSpan(
+      {
+        name: `external.${serviceName}`,
+        op: 'http.client',
+      },
+      async () => {
+        try {
+          return await callFn();
+        } catch (error) {
+          this.captureError(error as Error, { serviceName });
+          throw error;
+        }
+      }
+    );
   }
 
   /**

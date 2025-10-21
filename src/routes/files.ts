@@ -8,11 +8,11 @@ import { config } from '../config';
 const router = express.Router();
 
 // POST /api/files/upload - Upload single file
-router.post('/upload', authenticateToken, (req: Request, res: Response) => {
+router.post('/upload', authenticateToken, (req: Request, res: Response): void => {
   uploadSingle(req, res, (err) => {
     if (err) {
       const errorInfo = handleUploadError(err);
-      return res.status(400).json({
+      res.status(400).json({
         error: {
           code: errorInfo.code,
           message: errorInfo.message,
@@ -20,10 +20,11 @@ router.post('/upload', authenticateToken, (req: Request, res: Response) => {
           requestId: req.requestId
         }
       });
+      return;
     }
 
     if (!req.file) {
-      return res.status(400).json({
+      res.status(400).json({
         error: {
           code: 'NO_FILE',
           message: 'Nebyl vybrán žádný soubor',
@@ -31,6 +32,7 @@ router.post('/upload', authenticateToken, (req: Request, res: Response) => {
           requestId: req.requestId
         }
       });
+      return;
     }
 
     const fileInfo = {
@@ -53,11 +55,11 @@ router.post('/upload', authenticateToken, (req: Request, res: Response) => {
 });
 
 // POST /api/files/upload-multiple - Upload multiple files
-router.post('/upload-multiple', authenticateToken, (req: Request, res: Response) => {
+router.post('/upload-multiple', authenticateToken, (req: Request, res: Response): void => {
   uploadMultiple(req, res, (err) => {
     if (err) {
       const errorInfo = handleUploadError(err);
-      return res.status(400).json({
+      res.status(400).json({
         error: {
           code: errorInfo.code,
           message: errorInfo.message,
@@ -65,10 +67,11 @@ router.post('/upload-multiple', authenticateToken, (req: Request, res: Response)
           requestId: req.requestId
         }
       });
+      return;
     }
 
     if (!req.files || !Array.isArray(req.files) || req.files.length === 0) {
-      return res.status(400).json({
+      res.status(400).json({
         error: {
           code: 'NO_FILES',
           message: 'Nebyly vybrány žádné soubory',
@@ -76,6 +79,7 @@ router.post('/upload-multiple', authenticateToken, (req: Request, res: Response)
           requestId: req.requestId
         }
       });
+      return;
     }
 
     const filesInfo = req.files.map(file => ({
@@ -98,12 +102,12 @@ router.post('/upload-multiple', authenticateToken, (req: Request, res: Response)
 });
 
 // GET /api/files/:filename - Download/serve file
-router.get('/:filename', (req: Request, res: Response) => {
+router.get('/:filename', (req: Request, res: Response): void => {
   const { filename } = req.params;
-  
+
   // Validate filename to prevent directory traversal
   if (!filename || filename.includes('..') || filename.includes('/') || filename.includes('\\')) {
-    return res.status(400).json({
+    res.status(400).json({
       error: {
         code: 'INVALID_FILENAME',
         message: 'Neplatný název souboru',
@@ -111,13 +115,14 @@ router.get('/:filename', (req: Request, res: Response) => {
         requestId: req.requestId
       }
     });
+    return;
   }
 
   const filePath = path.join(config.upload.path, filename);
 
   // Check if file exists
   if (!fs.existsSync(filePath)) {
-    return res.status(404).json({
+    res.status(404).json({
       error: {
         code: 'FILE_NOT_FOUND',
         message: 'Soubor nebyl nalezen',
@@ -125,6 +130,7 @@ router.get('/:filename', (req: Request, res: Response) => {
         requestId: req.requestId
       }
     });
+    return;
   }
 
   // Get file stats
@@ -173,12 +179,12 @@ router.get('/:filename', (req: Request, res: Response) => {
 });
 
 // DELETE /api/files/:filename - Delete file (admin only)
-router.delete('/:filename', authenticateToken, (req: Request, res: Response) => {
+router.delete('/:filename', authenticateToken, (req: Request, res: Response): void => {
   const { filename } = req.params;
 
   // Only allow admins to delete files
   if (req.user?.role !== 'regional_admin') {
-    return res.status(403).json({
+    res.status(403).json({
       error: {
         code: 'INSUFFICIENT_PERMISSIONS',
         message: 'Nedostatečná oprávnění pro smazání souboru',
@@ -186,11 +192,12 @@ router.delete('/:filename', authenticateToken, (req: Request, res: Response) => 
         requestId: req.requestId
       }
     });
+    return;
   }
 
   // Validate filename
   if (!filename || filename.includes('..') || filename.includes('/') || filename.includes('\\')) {
-    return res.status(400).json({
+    res.status(400).json({
       error: {
         code: 'INVALID_FILENAME',
         message: 'Neplatný název souboru',
@@ -198,13 +205,14 @@ router.delete('/:filename', authenticateToken, (req: Request, res: Response) => 
         requestId: req.requestId
       }
     });
+    return;
   }
 
   const filePath = path.join(config.upload.path, filename);
 
   // Check if file exists
   if (!fs.existsSync(filePath)) {
-    return res.status(404).json({
+    res.status(404).json({
       error: {
         code: 'FILE_NOT_FOUND',
         message: 'Soubor nebyl nalezen',
@@ -212,6 +220,7 @@ router.delete('/:filename', authenticateToken, (req: Request, res: Response) => 
         requestId: req.requestId
       }
     });
+    return;
   }
 
   try {
@@ -234,10 +243,10 @@ router.delete('/:filename', authenticateToken, (req: Request, res: Response) => 
 });
 
 // GET /api/files - List uploaded files (admin only)
-router.get('/', authenticateToken, (req: Request, res: Response) => {
+router.get('/', authenticateToken, (req: Request, res: Response): void => {
   // Only allow admins to list files
   if (req.user?.role !== 'regional_admin') {
-    return res.status(403).json({
+    res.status(403).json({
       error: {
         code: 'INSUFFICIENT_PERMISSIONS',
         message: 'Nedostatečná oprávnění pro zobrazení seznamu souborů',
@@ -245,6 +254,7 @@ router.get('/', authenticateToken, (req: Request, res: Response) => {
         requestId: req.requestId
       }
     });
+    return;
   }
 
   try {

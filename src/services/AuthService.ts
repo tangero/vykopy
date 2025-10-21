@@ -12,9 +12,11 @@ export class AuthService {
       role: user.role,
     };
 
-    return jwt.sign(payload, config.jwt.secret, {
+    const options: SignOptions = {
       expiresIn: '24h',
-    });
+    };
+
+    return jwt.sign(payload, config.jwt.secret, options);
   }
 
   // Generate refresh token (longer expiry)
@@ -25,9 +27,11 @@ export class AuthService {
       role: user.role,
     };
 
-    return jwt.sign(payload, config.jwt.secret, {
+    const options: SignOptions = {
       expiresIn: '7d',
-    });
+    };
+
+    return jwt.sign(payload, config.jwt.secret, options);
   }
 
   // Verify JWT token

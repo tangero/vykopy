@@ -195,7 +195,10 @@ export class ProjectHistoryService {
         if (!changesByUser[row.user_id]) {
           changesByUser[row.user_id] = { count: 0, userName: row.user_name || 'Unknown' };
         }
-        changesByUser[row.user_id].count++;
+        const userEntry = changesByUser[row.user_id];
+        if (userEntry) {
+          userEntry.count++;
+        }
       }
     });
 
