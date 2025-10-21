@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import type { Geometry } from 'geojson';
-import { moratoriumService, type CreateMoratoriumRequest } from '../services/moratoriumService';
-import type { Moratorium } from '../types';
 import {
   moratoriumSchema,
   moratoriumReasonOptions,
@@ -98,7 +96,7 @@ const MoratoriumForm: React.FC<MoratoriumFormProps> = ({
 
   const handleReasonChange = (reason: string) => {
     form.setValue('reason', reason);
-    
+
     // Auto-fill reason detail for common cases
     const reasonOption = moratoriumReasonOptions.find(opt => opt.value === reason);
     if (reasonOption && !form.getValues('reasonDetail')) {
@@ -130,7 +128,7 @@ const MoratoriumForm: React.FC<MoratoriumFormProps> = ({
   };
 
   const clearGeometry = () => {
-    form.setValue('geometry', undefined);
+    form.setValue('geometry', null as any);
     if (onGeometryChange) {
       onGeometryChange(null);
     }
@@ -140,7 +138,7 @@ const MoratoriumForm: React.FC<MoratoriumFormProps> = ({
     <div className="moratorium-form">
       <form onSubmit={form.handleSubmit(handleSubmit)} className="moratorium-form-content">
         <h3>{moratoriumId ? 'Upravit moratorium' : 'Nové moratorium'}</h3>
-        
+
         {overlapWarnings.length > 0 && (
           <div className="overlap-warnings">
             <h4>⚠️ Upozornění na překryvy</h4>
@@ -192,14 +190,14 @@ const MoratoriumForm: React.FC<MoratoriumFormProps> = ({
               Použijte kreslicí nástroje na mapě pro vyznačení oblasti moratoria.
               Můžete kreslit linie nebo polygony podle rozsahu omezení.
             </p>
-            
+
             {(drawnGeometry || form.getValues('geometry')) && (
               <div className="geometry-info">
                 <p className="success-message">
                   ✓ Oblast typu {(drawnGeometry || form.getValues('geometry'))?.type} byla vyznačena
                 </p>
-                <button 
-                  type="button" 
+                <button
+                  type="button"
                   onClick={clearGeometry}
                   className="btn btn-outline btn-small"
                 >
@@ -207,7 +205,7 @@ const MoratoriumForm: React.FC<MoratoriumFormProps> = ({
                 </button>
               </div>
             )}
-            
+
             {form.formState.errors.geometry && (
               <span className="error-message">{form.formState.errors.geometry.message}</span>
             )}
@@ -300,16 +298,16 @@ const MoratoriumForm: React.FC<MoratoriumFormProps> = ({
         </div>
 
         <div className="form-actions">
-          <button 
-            type="button" 
-            onClick={onCancel} 
+          <button
+            type="button"
+            onClick={onCancel}
             className="btn btn-secondary"
             disabled={isSubmitting || isLoading}
           >
             Zrušit
           </button>
-          <button 
-            type="submit" 
+          <button
+            type="submit"
             className="btn btn-primary"
             disabled={isSubmitting || isLoading || !drawnGeometry}
           >

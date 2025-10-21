@@ -1,16 +1,29 @@
 import { api } from '../utils/api';
 import type { ProjectComment, CreateCommentRequest } from '../types';
 
+interface ApiResponse<T> {
+  success: boolean;
+  data: T;
+}
+
+interface CommentsResponse {
+  comments: any[];
+}
+
+interface CommentResponse {
+  comment: any;
+}
+
 class CommentService {
   /**
    * Get all comments for a project
    */
   async getComments(projectId: string): Promise<ProjectComment[]> {
     try {
-      const response = await api.get(`/projects/${projectId}/comments`);
-      
-      if (response.data.success) {
-        return response.data.data.comments.map((comment: any) => ({
+      const response = await api.get<ApiResponse<CommentsResponse>>(`/projects/${projectId}/comments`);
+
+      if (response.success) {
+        return response.data.comments.map((comment: any) => ({
           id: comment.id,
           projectId: comment.projectId,
           userId: comment.userId,
@@ -21,7 +34,7 @@ class CommentService {
           createdAt: comment.createdAt
         }));
       }
-      
+
       return [];
     } catch (error) {
       console.error('Error fetching comments:', error);
@@ -34,13 +47,13 @@ class CommentService {
    */
   async addComment(projectId: string, data: CreateCommentRequest): Promise<ProjectComment> {
     try {
-      const response = await api.post(`/projects/${projectId}/comments`, {
+      const response = await api.post<ApiResponse<CommentResponse>>(`/projects/${projectId}/comments`, {
         content: data.content,
         attachmentUrl: data.attachmentUrl
       });
 
-      if (response.data.success) {
-        const comment = response.data.data.comment;
+      if (response.success) {
+        const comment = response.data.comment;
         return {
           id: comment.id,
           projectId: comment.projectId,

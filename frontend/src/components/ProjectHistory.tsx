@@ -54,13 +54,20 @@ const ProjectHistory: React.FC<ProjectHistoryProps> = ({ projectId, isOpen, onCl
     setError(null);
 
     try {
-      const params = new URLSearchParams({
+      const params: Record<string, string> = {
         page: pagination.page.toString(),
-        limit: pagination.limit.toString(),
-        ...filters
-      });
+        limit: pagination.limit.toString()
+      };
 
-      const response = await fetch(`/api/projects/${projectId}/history?${params}`, {
+      // Add filters to params
+      if (filters.startDate) params.startDate = filters.startDate;
+      if (filters.endDate) params.endDate = filters.endDate;
+      if (filters.action) params.action = filters.action;
+      if (filters.userId) params.userId = filters.userId;
+
+      const queryString = new URLSearchParams(params).toString();
+
+      const response = await fetch(`/api/projects/${projectId}/history?${queryString}`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
@@ -71,7 +78,7 @@ const ProjectHistory: React.FC<ProjectHistoryProps> = ({ projectId, isOpen, onCl
       }
 
       const data = await response.json();
-      
+
       // Convert timestamp strings to Date objects
       const historyWithDates = data.history.map((entry: any) => ({
         ...entry,
@@ -94,9 +101,15 @@ const ProjectHistory: React.FC<ProjectHistoryProps> = ({ projectId, isOpen, onCl
 
   const exportToCsv = async () => {
     try {
-      const params = new URLSearchParams(filters);
-      
-      const response = await fetch(`/api/projects/${projectId}/history/export?${params}`, {
+      const params: Record<string, string> = {};
+      if (filters.startDate) params.startDate = filters.startDate;
+      if (filters.endDate) params.endDate = filters.endDate;
+      if (filters.action) params.action = filters.action;
+      if (filters.userId) params.userId = filters.userId;
+
+      const queryString = new URLSearchParams(params).toString();
+
+      const response = await fetch(`/api/projects/${projectId}/history/export?${queryString}`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
@@ -252,7 +265,7 @@ const ProjectHistory: React.FC<ProjectHistoryProps> = ({ projectId, isOpen, onCl
 
         <div className="project-history-content">
           {loading && <div className="loading">Loading history...</div>}
-          
+
           {error && (
             <div className="error-message">
               {error}

@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import mapboxgl from 'mapbox-gl';
 import type { Map as MapboxMap, GeoJSONSource } from 'mapbox-gl';
 import type { Moratorium } from '../types';
 
@@ -9,11 +10,11 @@ interface MoratoriumLayerProps {
   onMoratoriumClick?: (moratoriumId: string) => void;
 }
 
-const MoratoriumLayer: React.FC<MoratoriumLayerProps> = ({ 
-  map, 
-  moratoriums, 
+const MoratoriumLayer: React.FC<MoratoriumLayerProps> = ({
+  map,
+  moratoriums,
   visible = true,
-  onMoratoriumClick 
+  onMoratoriumClick
 }) => {
   // Convert moratoriums to GeoJSON format
   const moratoriumsGeoJSON: GeoJSON.FeatureCollection = {
@@ -178,7 +179,7 @@ const MoratoriumLayer: React.FC<MoratoriumLayerProps> = ({
     if (!map) return;
 
     const layers = ['moratoriums-fill', 'moratoriums-line', 'moratoriums-pattern', 'moratoriums-point', 'moratoriums-symbol'];
-    
+
     layers.forEach(layerId => {
       if (map.getLayer(layerId)) {
         map.setLayoutProperty(layerId, 'visibility', visible ? 'visible' : 'none');
@@ -191,7 +192,7 @@ const MoratoriumLayer: React.FC<MoratoriumLayerProps> = ({
     if (!map) return;
 
     const layers = ['moratoriums-fill', 'moratoriums-line', 'moratoriums-point'];
-    
+
     layers.forEach(layerId => {
       if (map.getLayer(layerId)) {
         // Change cursor on hover
@@ -216,7 +217,7 @@ const MoratoriumLayer: React.FC<MoratoriumLayerProps> = ({
 
         map.on('mouseenter', layerId, handleMouseEnter);
         map.on('mouseleave', layerId, handleMouseLeave);
-        
+
         if (onMoratoriumClick) {
           map.on('click', layerId, handleClick);
         }
@@ -237,12 +238,12 @@ const MoratoriumLayer: React.FC<MoratoriumLayerProps> = ({
       if (e.features && e.features.length > 0) {
         const feature = e.features[0];
         const props = feature.properties;
-        
+
         if (props) {
           const validFrom = new Date(props.validFrom).toLocaleDateString('cs-CZ');
           const validTo = new Date(props.validTo).toLocaleDateString('cs-CZ');
           const isActive = props.isActive;
-          
+
           const tooltipContent = `
             <div class="moratorium-tooltip">
               <h4>${props.name}</h4>
@@ -274,7 +275,7 @@ const MoratoriumLayer: React.FC<MoratoriumLayerProps> = ({
     };
 
     const layers = ['moratoriums-fill', 'moratoriums-line', 'moratoriums-point'];
-    
+
     layers.forEach(layerId => {
       if (map.getLayer(layerId)) {
         map.on('mouseenter', layerId, showTooltip);

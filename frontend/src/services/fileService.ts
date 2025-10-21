@@ -1,5 +1,3 @@
-import { api } from '../utils/api';
-
 export interface FileUploadResponse {
   id: string;
   originalName: string;
@@ -18,9 +16,22 @@ export interface FileUploadProgress {
   percentage: number;
 }
 
+interface ApiResponse<T> {
+  success: boolean;
+  data: T;
+}
+
+interface FileResponse {
+  file: FileUploadResponse;
+}
+
+interface FilesResponse {
+  files: FileUploadResponse[];
+}
+
 class FileService {
   /**
-   * Upload a single file
+   * Upload a single file using XMLHttpRequest for progress tracking
    */
   async uploadFile(
     file: File,
@@ -29,41 +40,60 @@ class FileService {
     const formData = new FormData();
     formData.append('file', file);
 
-    try {
-      const response = await api.post('/files/upload', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-        onUploadProgress: (progressEvent) => {
-          if (onProgress && progressEvent.total) {
-            const progress: FileUploadProgress = {
-              loaded: progressEvent.loaded,
-              total: progressEvent.total,
-              percentage: Math.round((progressEvent.loaded * 100) / progressEvent.total)
-            };
-            onProgress(progress);
+    return new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+
+      // Track upload progress
+      xhr.upload.addEventListener('progress', (e: ProgressEvent) => {
+        if (onProgress && e.lengthComputable) {
+          const progress: FileUploadProgress = {
+            loaded: e.loaded,
+            total: e.total,
+            percentage: Math.round((e.loaded * 100) / e.total)
+          };
+          onProgress(progress);
+        }
+      });
+
+      xhr.addEventListener('load', () => {
+        if (xhr.status >= 200 && xhr.status < 300) {
+          try {
+            const response: ApiResponse<FileResponse> = JSON.parse(xhr.responseText);
+            if (response.success) {
+              resolve(response.data.file);
+            } else {
+              reject(new Error('Upload failed'));
+            }
+          } catch (error) {
+            reject(new Error('Nepodařilo se nahrát soubor'));
+          }
+        } else {
+          try {
+            const errorResponse = JSON.parse(xhr.responseText);
+            reject(new Error(errorResponse.error?.message || 'Nepodařilo se nahrát soubor'));
+          } catch {
+            reject(new Error('Nepodařilo se nahrát soubor'));
           }
         }
       });
 
-      if (response.data.success) {
-        return response.data.data.file;
+      xhr.addEventListener('error', () => {
+        reject(new Error('Nepodařilo se nahrát soubor'));
+      });
+
+      xhr.open('POST', '/api/files/upload');
+
+      const token = localStorage.getItem('token');
+      if (token) {
+        xhr.setRequestHeader('Authorization', `Bearer ${token}`);
       }
 
-      throw new Error('Upload failed');
-    } catch (error: any) {
-      console.error('File upload error:', error);
-      
-      if (error.response?.data?.error) {
-        throw new Error(error.response.data.error.message);
-      }
-      
-      throw new Error('Nepodařilo se nahrát soubor');
-    }
+      xhr.send(formData);
+    });
   }
 
   /**
-   * Upload multiple files
+   * Upload multiple files using XMLHttpRequest for progress tracking
    */
   async uploadFiles(
     files: File[],
@@ -74,37 +104,56 @@ class FileService {
       formData.append('files', file);
     });
 
-    try {
-      const response = await api.post('/files/upload-multiple', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-        onUploadProgress: (progressEvent) => {
-          if (onProgress && progressEvent.total) {
-            const progress: FileUploadProgress = {
-              loaded: progressEvent.loaded,
-              total: progressEvent.total,
-              percentage: Math.round((progressEvent.loaded * 100) / progressEvent.total)
-            };
-            onProgress(progress);
+    return new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+
+      // Track upload progress
+      xhr.upload.addEventListener('progress', (e: ProgressEvent) => {
+        if (onProgress && e.lengthComputable) {
+          const progress: FileUploadProgress = {
+            loaded: e.loaded,
+            total: e.total,
+            percentage: Math.round((e.loaded * 100) / e.total)
+          };
+          onProgress(progress);
+        }
+      });
+
+      xhr.addEventListener('load', () => {
+        if (xhr.status >= 200 && xhr.status < 300) {
+          try {
+            const response: ApiResponse<FilesResponse> = JSON.parse(xhr.responseText);
+            if (response.success) {
+              resolve(response.data.files);
+            } else {
+              reject(new Error('Upload failed'));
+            }
+          } catch (error) {
+            reject(new Error('Nepodařilo se nahrát soubory'));
+          }
+        } else {
+          try {
+            const errorResponse = JSON.parse(xhr.responseText);
+            reject(new Error(errorResponse.error?.message || 'Nepodařilo se nahrát soubory'));
+          } catch {
+            reject(new Error('Nepodařilo se nahrát soubory'));
           }
         }
       });
 
-      if (response.data.success) {
-        return response.data.data.files;
+      xhr.addEventListener('error', () => {
+        reject(new Error('Nepodařilo se nahrát soubory'));
+      });
+
+      xhr.open('POST', '/api/files/upload-multiple');
+
+      const token = localStorage.getItem('token');
+      if (token) {
+        xhr.setRequestHeader('Authorization', `Bearer ${token}`);
       }
 
-      throw new Error('Upload failed');
-    } catch (error: any) {
-      console.error('Files upload error:', error);
-      
-      if (error.response?.data?.error) {
-        throw new Error(error.response.data.error.message);
-      }
-      
-      throw new Error('Nepodařilo se nahrát soubory');
-    }
+      xhr.send(formData);
+    });
   }
 
   /**
@@ -157,11 +206,11 @@ class FileService {
    */
   formatFileSize(bytes: number): string {
     if (bytes === 0) return '0 B';
-    
+
     const k = 1024;
     const sizes = ['B', 'KB', 'MB', 'GB'];
     const i = Math.floor(Math.log(bytes) / Math.log(k));
-    
+
     return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
   }
 

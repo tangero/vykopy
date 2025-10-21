@@ -23,20 +23,13 @@ export default defineConfig({
           vendor: ['react', 'react-dom', 'react-router-dom'],
           redux: ['@reduxjs/toolkit', 'react-redux'],
           map: ['mapbox-gl'],
-          forms: ['react-hook-form', '@hookform/resolvers', 'zod'],
-          ui: ['@gov-design-system-ce/react']
+          forms: ['react-hook-form', '@hookform/resolvers', 'zod']
         }
       }
     },
     chunkSizeWarningLimit: 1000,
-    // Enable compression
-    minify: 'terser',
-    terserOptions: {
-      compress: {
-        drop_console: true,
-        drop_debugger: true
-      }
-    }
+    // Use esbuild for minification (faster and included by default)
+    minify: 'esbuild'
   },
   // Performance optimizations
   optimizeDeps: {
@@ -49,8 +42,7 @@ export default defineConfig({
       'mapbox-gl',
       'react-hook-form',
       '@hookform/resolvers',
-      'zod',
-      '@gov-design-system-ce/react'
+      'zod'
     ]
   }
 });
