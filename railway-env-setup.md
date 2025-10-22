@@ -22,6 +22,8 @@ NODE_ENV=production
 
 ---
 
+skvělé
+
 ## 📧 EMAIL SERVICE (volitelné - pro notifikace)
 
 ### SendGrid (DOPORUČENO - free 100 emails/den)
